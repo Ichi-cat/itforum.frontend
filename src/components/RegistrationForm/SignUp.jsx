@@ -1,10 +1,13 @@
+import {Link, useNavigate} from "react-router-dom";
+
 export const SignUp = () => {
+    const navigate = useNavigate();
     return(
         <div className="page page-center">
             <div className="container container-tight py-4">
                     <div className="text-center mb-4">
                         <a href="" className="navbar-brand navbar-brand-autodark">
-                            <h1>ITForum</h1>
+                            <h1 className="cursor-pointer" onClick={() => navigate("/")}>ITForum</h1>
                         </a>
                     </div>
                     <form className="card card-md" action="./" method="get" autoComplete="off" noValidate>
@@ -69,7 +72,7 @@ export const SignUp = () => {
                         </div>
                     </form>
                     <div className="text-center text-muted mt-3">
-                        Already have account? <a href="./SignUp#SignUp.jsx" tabIndex={-1}>Sign in</a>
+                        Already have account? <Link to="/SignIn" tabIndex={-1}>Sign in</Link>
                     </div>
             </div>
         </div>

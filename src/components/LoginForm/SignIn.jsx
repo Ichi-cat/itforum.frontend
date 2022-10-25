@@ -1,9 +1,12 @@
+import {Link, useNavigate} from "react-router-dom";
+
 export const SignIn = () => {
+    const navigate = useNavigate();
     return (
         <div className="page page-center">
             <div className="container container-tight py-4">
                 <div className="text-center mb-4">
-                    <h1>ITForum</h1>
+                    <h1 className="cursor-pointer" onClick={() => navigate("/")}>ITForum</h1>
                 </div>
                 <div className="card card-md">
                     <div className="card-body">
@@ -77,7 +80,7 @@ export const SignIn = () => {
                     </div>
                 </div>
                 <div className="text-center text-muted mt-3">
-                    Don't have account yet? <a href="./sign-up.html" tabIndex={-1}>Sign up</a>
+                    Don't have account yet? <Link to="/SignUp" tabIndex={-1}>Sign up</Link>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import Me from '../../img/20220721_143949.jpg'
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, NavLink, Outlet} from "react-router-dom";
 
 const Header = () => {
     const [isDark, setDark] = useState(false);
@@ -12,6 +12,7 @@ const Header = () => {
     };
     const [isAuthorized, setAuthorize] = useState(false);
     return (
+        <>
         <header className="navbar navbar-expand-md navbar-dark d-print-none">
             <div className="container-xl">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -26,27 +27,27 @@ const Header = () => {
                 <div className="collapse navbar-collapse" id="navbar-menu">
                     <div className="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
                         <ul className="navbar-nav">
-                            <li className="nav-item mx-1 active">
-                                <Link to="/" className="nav-link">
+                            <NavLink to="/list" className={({isActive, isPending}) => isActive? "nav-item mx-1 active":"nav-item mx-1"}>
+                                <li className="nav-link">
                                     <span className="nav-link-title">
                                       Home
                                     </span>
-                                </Link>
-                            </li>
-                            <li className="nav-item mx-1">
-                                <Link className="nav-link" to="/tagList">
+                                </li>
+                            </NavLink>
+                            <NavLink to="/tags" className={({isActive, isPending}) => isActive? "nav-item mx-1 active":"nav-item mx-1"}>
+                                <li className="nav-link" to="/tagList">
                 <span className="nav-link-title">
                   Tags
                 </span>
-                                </Link>
-                            </li>
-                            <li className="nav-item mx-1">
-                                <Link className="nav-link" to="/users">
+                                </li>
+                            </NavLink>
+                            <NavLink to="/users" className={({isActive, isPending}) => isActive? "nav-item mx-1 active":"nav-item mx-1"}>
+                                <li className="nav-link" to="/users">
                 <span className="nav-link-title">
                   Users
                 </span>
-                                </Link>
-                            </li>
+                                </li>
+                            </NavLink>
                         </ul>
                     </div>
                 </div>
@@ -82,7 +83,7 @@ const Header = () => {
                                   style={{backgroundImage: `url(${Me})`}}></span>
 
                         </a>}
-                        {!isAuthorized && <button className="btn bg-dark">Sign In</button>}
+                        {!isAuthorized && <Link to="/SignIn" className="btn bg-dark">Sign In</Link>}
                         <div className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                             <a href="#" className="dropdown-item">Set status</a>
                             <a href="#" className="dropdown-item">Profile &amp; account</a>
@@ -95,6 +96,8 @@ const Header = () => {
                 </div>
             </div>
         </header>
+        <Outlet/>
+    </>
     );
 }
 

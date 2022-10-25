@@ -9,20 +9,23 @@ import {Route, Routes} from "react-router-dom"
 function App() {
   return (
     <div className="App theme-dark">
-      <Header/>
       <Routes>
-        <Route path="/" element={<TopicList />}>
-          {/*<Route index element={<TopicList/>} />*/}
-          {/*<Route path="teams" element={<Teams />}>*/}
-          {/*<Route path=":teamId" element={<Team />} />*/}
-          {/*<Route path="new" element={<NewTeamForm />} />*/}
-          {/*<Route index element={<LeagueStandings />} />*/}
-          {/*</Route>*/}
-        </Route>
-        {/*<Route path="/details/:topicId" element={<TopicDetails/>}/>*/}
+          <Route path="/" element={<Header/>}>
+              <Route index element={<TopicList/>}/>
+              <Route path="list" element={<TopicList/>}/>
+              <Route path="tags" element={<TopicList/>}/>
+              <Route path="users" element={<TopicList/>}/>
+          {/*    routings for pages with header*/}
+          </Route>
+          <Route path="/SignIn" element={<SignIn/>}/>
+          <Route path="/SignUp" element={<SignUp/>}/>
+          {/*    routings for pages without header*/}
+          {/*https://reactrouter.com/en/main/start/overview*/}
+
       </Routes>
     </div>
   );
 }
 
 export default App;
+
