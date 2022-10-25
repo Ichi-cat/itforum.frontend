@@ -2,6 +2,8 @@ import './App.css';
 import './css/tabler.min.css'
 import Header from "./components/Header/Header";
 import TopicList from "./components/TopicList/TopicList";
+import SignIn from "./components/LoginForm/SignIn";
+import SignUp from "./components/RegistrationForm/SignUp";
 import {Route, Routes} from "react-router-dom"
 
 function App() {
