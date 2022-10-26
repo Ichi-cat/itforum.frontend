@@ -1,3 +1,9 @@
 .App{
     min-height: 100vh;
 }
+.theme-dark .hideThemeDark {
+    display: none;
+}
+.theme-light .hideThemeLight {
+    display: none;
+}
