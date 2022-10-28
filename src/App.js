@@ -5,12 +5,14 @@ import TopicList from "./components/TopicList/TopicList";
 import SignIn from "./components/LoginForm/SignIn";
 import SignUp from "./components/RegistrationForm/SignUp";
 import {Route, Routes} from "react-router-dom"
+import {useState} from "react";
 
 function App() {
+    const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
   return (
-    <div className="App theme-dark">
+    <div className={`App ` + (isDark ? "theme-dark":"theme-light")}>
       <Routes>
-          <Route path="/" element={<Header/>}>
+          <Route path="/" element={<Header setDark={setDark}/>}>
               <Route index element={<TopicList/>}/>
               <Route path="list" element={<TopicList/>}/>
               <Route path="tags" element={<TopicList/>}/>
