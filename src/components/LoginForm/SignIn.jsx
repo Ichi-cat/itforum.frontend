@@ -1,7 +1,13 @@
 import {Link, useNavigate} from "react-router-dom";
+import {authAPI} from "../../services/authApi";
 
 export const SignIn = () => {
     const navigate = useNavigate();
+    const [sighIn, {status}] = authAPI.useSignInMutation();
+
+    const signInOnClick = () => {
+        sighIn({userName: "string", password: "string"}).then(data => console.log(data));
+    }
     return (
         <div className="page page-center">
             <div className="container container-tight py-4">
