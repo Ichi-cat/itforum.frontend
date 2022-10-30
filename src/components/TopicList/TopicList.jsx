@@ -5,6 +5,7 @@ import {topicAPI} from "../../services/topicApi";
 
 const TopicList = () => {
     const {data: topics, isFetching, refetch} = topicAPI.useFetchAllTopicsQuery();
+    debugger;
     return (
         <div className="container-xl">
             <button className="btn" onClick={() => refetch()}>Refresh</button>

@@ -1,14 +1,16 @@
 import React from 'react';
 import {facebookConfig} from "../../../config";
-import {authAPI} from "../../../services/authApi";
+import {authAPI, setJwtToken} from "../../../services/authApi";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 const FacebookAuthenticate = () => {
     const [facebookAuthenticate, {facebookStatus}] = authAPI.useFacebookAuthenticationMutation();
     const responseFacebook = (response) => {
-        console.log("facebook");
-        console.log(response);
-        facebookAuthenticate(response.accessToken).then(data => console.log(data));
+        if(response.status == 'undefined'){
+            //todo:Authentication is failed
+            return;
+        }
+        facebookAuthenticate(response.accessToken).then(data => setJwtToken(data));
         //response.accessToken
     }
     return (

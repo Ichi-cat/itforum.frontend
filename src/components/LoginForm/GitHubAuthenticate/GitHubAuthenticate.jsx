@@ -1,14 +1,19 @@
 import React from 'react';
 import LoginGithub from "react-login-github";
-import {authAPI} from "../../../services/authApi";
+import {authAPI, setJwtToken} from "../../../services/authApi";
+import {useNavigate} from "react-router-dom";
 
 const GitHubAuthenticate = () => {
     const [gitHubAuthenticate, {githubStatus}] = authAPI.useGithubAuthenticationMutation();
+    const navigate = useNavigate();
     const onSuccess = response => {
-        console.log(response.code);
-        gitHubAuthenticate(response.code).then(data => console.log(data));
+        gitHubAuthenticate(response.code).then(data => setJwtToken(data))
+            .then(_ => navigate("/"));
     }
-    const onFailure = response => console.error(response);
+    const onFailure = response => {
+        console.log(response)
+
+    };
     return (
         <LoginGithub className="btn w-100"
                      clientId="6e58945451b0086ef8f8"

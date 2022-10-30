@@ -21,7 +21,7 @@ export const topicAPI = createApi({
                     count: 10
                 },
             }),
-            transformResponse: (response, meta, arg) => response.data
+            // transformResponse: (response, meta, arg) => response.data
         }),
         fetchTopicDetails: build.query({
             query: (id) => ({
