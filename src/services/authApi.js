@@ -32,6 +32,24 @@ export const authAPI = createApi({
                     getCacheEntry,
                 }
             ) {},
+        }),
+        facebookAuthentication: build.mutation({
+            query: (accessToken) => ({
+                url: '/Auth/SignInFacebook/facebook',
+                method: 'POST',
+                params: {
+                    token: accessToken
+                }
+            })
+        }),
+        githubAuthentication: build.mutation({
+            query: (code) => ({
+                url: '/Auth/SignInGithub/github',
+                method: 'POST',
+                params: {
+                    code: code
+                }
+            })
         })
     })
 });
