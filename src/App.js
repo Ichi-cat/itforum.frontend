@@ -1,8 +1,9 @@
-import './App.css';
 import './css/tabler.min.css'
 import Header from "./components/Header/Header";
 import TopicList from "./components/TopicList/TopicList";
 import {Route, Routes} from "react-router-dom"
+import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
+import './App.css';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           {/*<Route index element={<LeagueStandings />} />*/}
           {/*</Route>*/}
         </Route>
+          <Route path="/profile" element={<ProfileInfo/>}/>
         {/*<Route path="/details/:topicId" element={<TopicDetails/>}/>*/}
       </Routes>
     </div>
