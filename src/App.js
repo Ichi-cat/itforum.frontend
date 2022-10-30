@@ -1,11 +1,12 @@
-import './App.css';
-import './css/tabler.min.css'
 import Header from "./components/Header/Header";
 import TopicList from "./components/TopicList/TopicList";
 import SignIn from "./components/LoginForm/SignIn";
 import SignUp from "./components/RegistrationForm/SignUp";
 import {Route, Routes} from "react-router-dom"
 import {useState} from "react";
+import "@tabler/core/dist/js/tabler.min";
+import "@tabler/core/dist/css/tabler.min.css";
+import './App.css'
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");

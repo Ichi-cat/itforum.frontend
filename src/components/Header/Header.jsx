@@ -84,7 +84,7 @@ const Header = ({setDark}) => {
                                   style={{backgroundImage: `url(${Me})`}}></span>
 
                         </a>}
-                        {!isAuthorized && <Link to="/SignIn" className="btn bg-dark">Sign In</Link>}
+                        {!isAuthorized && <Link to="/SignIn" className="btn">Sign In</Link>}
                         <div className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                             <a href="#" className="dropdown-item">Set status</a>
                             <a href="#" className="dropdown-item">Profile &amp; account</a>
