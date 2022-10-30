@@ -1,5 +1,6 @@
 import React from 'react';
 import MeProfile from "../../../img/20220721_145514.jpg";
+import {Link} from "react-router-dom";
 
 const ProfileCard = () => {
     return (
@@ -12,7 +13,7 @@ const ProfileCard = () => {
                 <div className="card-title mb-1">Stas Holoborodyi</div>
                 <div className="text-muted">Programmer</div>
             </div>
-            <a href="#" className="card-btn">View full profile</a>
+            <Link to="/profile" className="card-btn">View full profile</Link>
         </div>
     );
 };

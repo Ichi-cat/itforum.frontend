@@ -1,6 +1,10 @@
 .App{
     min-height: 100vh;
 }
+.userAvatar{
+    border-radius: 50%;
+    --tblr-avatar-size: 10rem;
+}
 .theme-dark .hideThemeDark {
     display: none;
 }
