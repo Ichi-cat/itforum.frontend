@@ -1,15 +1,14 @@
 import ProfileCard from "./ProfileCard/ProfileCard";
 import LastViewedCard from "./LastViewedCard/LastViewedCard";
 import TopicItem from "./TopicItem/TopicItem";
+import {topicAPI} from "../../services/topicApi";
 
 const TopicList = () => {
-    const topics = [
-        {id: "7324b1dd-07c9-4442-b0ac-25feba79965a", name: "Topic name", shortContent: "Some content" },
-        {id: "7324b1dd-07c9-4442-b0ac-25feba79945a", name: "Topic name", shortContent: "Some content" },
-        {id: "7324b1dd-07c9-4442-b0ac-25feba79935a", name: "Topic name", shortContent: "Some content" }
-    ];
+    const {data: topics, isFetching, refetch} = topicAPI.useFetchAllTopicsQuery();
     return (
         <div className="container-xl">
+            <button className="btn" onClick={() => refetch()}>Refresh</button>
+            {!isFetching &&
             <div className="row mt-5 justify-content-md-center">
                 <div className="col-lg-2 col-md-8 col-sm-12">
                     <ProfileCard/>
@@ -22,7 +21,9 @@ const TopicList = () => {
                 <div className="col-lg-2 col-md-8 col-sm-12">
                     <LastViewedCard/>
                 </div>
-            </div>
+            </div>}
+            {isFetching &&
+            <div>Fetching...</div>}
         </div>
     );
 }

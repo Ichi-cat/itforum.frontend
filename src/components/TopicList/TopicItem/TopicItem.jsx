@@ -1,13 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 const TopicItem = ({topic}) => {
     const details = "Some temp content";
+    const navigate = useNavigate();
     return (
-        <Link to={`details/${topic.id}`}>
-            <div className="card w-100 center-block mb-3">
+            <div onClick={() => navigate(`details/${topic.id}`)} className="card w-100 center-block mb-3">
                 <div className="card-header">
-                    <h3 className="card-title">{topic.name}</h3>
+                    <h3 className="card-title cursor-pointer">{topic.name}</h3>
                     <div className="card-actions btn-actions">
                         <a href="#" className="btn-action">
                             <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
@@ -58,7 +58,6 @@ const TopicItem = ({topic}) => {
 
                 </div>
             </div>
-        </Link>
     );
 };
 

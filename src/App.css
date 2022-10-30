@@ -5,3 +5,9 @@
     border-radius: 50%;
     --tblr-avatar-size: 10rem;
 }
+.theme-dark .hideThemeDark {
+    display: none;
+}
+.theme-light .hideThemeLight {
+    display: none;
+}
