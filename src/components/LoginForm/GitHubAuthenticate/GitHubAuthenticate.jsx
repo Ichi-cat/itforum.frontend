@@ -1,14 +1,25 @@
 import React from 'react';
 import LoginGithub from "react-login-github";
-import {authAPI, setJwtToken} from "../../../services/authApi";
+import {authAPI} from "../../../services/authApi";
 import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {setToken} from "../../../store/reducers/AuthReducer";
 
 const GitHubAuthenticate = () => {
-    const [gitHubAuthenticate, {githubStatus}] = authAPI.useGithubAuthenticationMutation();
+    const isAuthorized = useSelector((state) => state.auth.isAuth);
     const navigate = useNavigate();
+    if(isAuthorized) navigate("/");
+    const [gitHubAuthenticate, response] = authAPI.useGithubAuthenticationMutation();
+    console.log("data");
+    console.log(response);
+    debugger;
+    const dispatch = useDispatch();
     const onSuccess = response => {
-        gitHubAuthenticate(response.code).then(data => setJwtToken(data))
-            .then(_ => navigate("/"));
+        gitHubAuthenticate(response.code)
+            .then(data => dispatch(setToken(data.data.token)));
+            // .then(data => setJwtToken(data))
+            // .then(data => dispatch())
+            // .then(_ => navigate("/"));
     }
     const onFailure = response => {
         console.log(response)

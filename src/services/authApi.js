@@ -5,6 +5,7 @@ const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxz
 
 export const setJwtToken = (data) => {
     localStorage.setItem("token", data.data.token);
+    return data;
 }
 
 export const authAPI = createApi({

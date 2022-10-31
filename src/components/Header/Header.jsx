@@ -1,8 +1,16 @@
 import Me from '../../img/20220721_143949.jpg'
 import {useState} from "react";
 import {Link, NavLink, Outlet} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {userAPI} from "../../services/userApi";
+import {logOut} from "../../store/reducers/AuthReducer";
 
 const Header = ({setDark}) => {
+    const isAuthorized = useSelector((state) => state.auth.isAuth);
+    const token = useSelector((state) => state.auth.token);
+    const userInfo = userAPI.useGetUserInformationQuery(token, {skip: !isAuthorized});
+    const dispatch = useDispatch();
+    debugger;
     const setDarkTheme = () => {
         localStorage.setItem("theme", "dark");
         setDark(true);
@@ -11,7 +19,9 @@ const Header = ({setDark}) => {
         localStorage.setItem("theme", "light");
         setDark(false);
     };
-    const [isAuthorized, setAuthorize] = useState(false);
+    const logOutOnClick = () => {
+        dispatch(logOut())
+    }
     return (
         <>
         <header className="navbar navbar-expand-md navbar-dark d-print-none">
@@ -78,21 +88,23 @@ const Header = ({setDark}) => {
                         </div>
                     </div>
                     <div className="nav-item dropdown">
-                        {isAuthorized && <a href="#" className="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
-                                            aria-label="Open user menu">
+                        {isAuthorized && <>
+                            <a href="#" className="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
+                               aria-label="Open user menu">
                             <span className="avatar avatar-sm"
                                   style={{backgroundImage: `url(${Me})`}}></span>
 
-                        </a>}
+                            </a>
+                            <div className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <a href="#" className="dropdown-item">Set status</a>
+                                <a href="#" className="dropdown-item">Profile &amp; account</a>
+                                <a href="#" className="dropdown-item">Feedback</a>
+                                <div className="dropdown-divider"></div>
+                                <a href="#" className="dropdown-item">Settings</a>
+                                <button className="dropdown-item" onClick={logOutOnClick}>Logout</button>
+                            </div>
+                        </>}
                         {!isAuthorized && <Link to="/SignIn" className="btn bg-dark">Sign In</Link>}
-                        <div className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <a href="#" className="dropdown-item">Set status</a>
-                            <a href="#" className="dropdown-item">Profile &amp; account</a>
-                            <a href="#" className="dropdown-item">Feedback</a>
-                            <div className="dropdown-divider"></div>
-                            <a href="#" className="dropdown-item">Settings</a>
-                            <a href="#" className="dropdown-item">Logout</a>
-                        </div>
                     </div>
                 </div>
             </div>
