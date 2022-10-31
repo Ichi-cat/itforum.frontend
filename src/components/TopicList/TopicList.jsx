@@ -2,9 +2,11 @@ import ProfileCard from "./ProfileCard/ProfileCard";
 import LastViewedCard from "./LastViewedCard/LastViewedCard";
 import TopicItem from "./TopicItem/TopicItem";
 import {topicAPI} from "../../services/topicApi";
+import {useSelector} from "react-redux";
 
 const TopicList = () => {
-    const {data: topics, isFetching, refetch} = topicAPI.useFetchAllTopicsQuery();
+    const token = useSelector(state => state.auth.token);
+    const {data: topics, isFetching, refetch} = topicAPI.useFetchAllTopicsQuery(token);
     return (
         <div className="container-xl">
             <button className="btn" onClick={() => refetch()}>Refresh</button>

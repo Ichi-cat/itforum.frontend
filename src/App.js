@@ -7,9 +7,14 @@ import {Route, Routes} from "react-router-dom"
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
 import './App.css';
 import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {setToken} from "./store/reducers/AuthReducer";
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
+    const dispatch = useDispatch();
+    if(localStorage.getItem("token"))
+        dispatch(setToken(localStorage.getItem("token")))
   return (
     <div className={`App ` + (isDark ? "theme-dark":"theme-light")}>
       <Routes>
