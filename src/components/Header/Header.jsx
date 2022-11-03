@@ -8,7 +8,7 @@ import {logOut} from "../../store/reducers/AuthReducer";
 const Header = ({setDark}) => {
     const isAuthorized = useSelector((state) => state.auth.isAuth);
     const token = useSelector((state) => state.auth.token);
-    const userInfo = userAPI.useGetUserInformationQuery(token, {skip: !isAuthorized});
+    const { data: userInfo, isLoading, isFetching, isError } = userAPI.useGetUserInformationQuery(token, {skip: !isAuthorized});
     const dispatch = useDispatch();
     debugger;
     const setDarkTheme = () => {
@@ -92,7 +92,7 @@ const Header = ({setDark}) => {
                             <a href="#" className="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                                aria-label="Open user menu">
                             <span className="avatar avatar-sm"
-                                  style={{backgroundImage: `url(${Me})`}}></span>
+                                  style={{backgroundImage: `url(${userInfo && userInfo.avatar})`}}></span>
 
                             </a>
                             <div className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

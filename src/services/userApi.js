@@ -17,7 +17,7 @@ export const userAPI = createApi({
                 url: '/User',
                 headers: {
                     "authorization": `Bearer ${accessToken}`
-                }
+                },
             })
         }),
     })
