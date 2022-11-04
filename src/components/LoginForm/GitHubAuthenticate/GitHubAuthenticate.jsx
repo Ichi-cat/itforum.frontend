@@ -10,9 +10,6 @@ const GitHubAuthenticate = () => {
     const navigate = useNavigate();
     if(isAuthorized) navigate("/");
     const [gitHubAuthenticate, response] = authAPI.useGithubAuthenticationMutation();
-    console.log("data");
-    console.log(response);
-    debugger;
     const dispatch = useDispatch();
     const onSuccess = response => {
         gitHubAuthenticate(response.code)
