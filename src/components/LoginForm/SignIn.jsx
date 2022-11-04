@@ -1,20 +1,15 @@
 import {Link, useNavigate} from "react-router-dom";
-import {authAPI} from "../../services/authApi";
-import LoginGithub from 'react-login-github';
 import FacebookAuthenticate from "./FacebookAuthenticate/FacebookAuthenticate";
 import GitHubAuthenticate from "./GitHubAuthenticate/GitHubAuthenticate";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useState} from "react";
 import * as Yup from 'yup'
-import {setToken} from "../../store/reducers/AuthReducer";
-import {useDispatch} from "react-redux";
 
 
-export const SignIn = () => {
+export const SignIn = ({onSubmit, errors}) => {
+    debugger;
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [showPassword, setShowPassword] = useState(false);
-    const [sighIn, {status}] = authAPI.useSignInMutation();
     const showPasswordOnClick = () => {
         setShowPassword(!showPassword);
     }
@@ -30,23 +25,6 @@ export const SignIn = () => {
                 return false
             })
     });
-    const submitOnClick = (values, { setSubmitting }) => {
-        sighIn({userName: values.login, password: values.password})
-            .then(data => {setSubmitting(false); return data;})
-            .then(data => {console.log(data); return data;})
-            .then(data => onSubmitEnded(data));
-    }
-    const onSubmitEnded = (data) => {
-        if(data.error){
-            console.log(data.error.data.Errors[0]);
-        } else{
-            dispatch(setToken(data.data.token))
-        }
-        return data;
-    }
-    const signInOnClick = () => {
-        sighIn({userName: "string", password: "string"}).then(data => console.log(data));
-    }
     return (
         <div className="page page-center">
             <div className="container container-tight py-4">
@@ -56,7 +34,7 @@ export const SignIn = () => {
                 <div className="card card-md">
                     <div className="card-body">
                         <h2 className="h2 text-center mb-4">Login to your account</h2>
-                        <Formik initialValues={{login: "", password: "", remember: false}} validationSchema={validateForm} onSubmit={submitOnClick}>
+                        <Formik initialValues={{login: "", password: "", remember: false}} validationSchema={validateForm} onSubmit={onSubmit}>
                             {({isSubmitting}) => (
                                 <Form autoComplete="off">
                                     <div className="mb-3">
@@ -96,7 +74,7 @@ export const SignIn = () => {
                                         </label>
                                     </div>
                                     <div className="form-footer">
-                                        <div className="text-danger  mb-2">User is not exists</div>
+                                        {errors && errors.map(error => <div className="text-danger  mb-2">{error.Message}</div>)}
                                         <button type="submit" className="btn btn-primary w-100"  disabled={isSubmitting}>Sign in</button>
                                     </div>
                                 </Form>
