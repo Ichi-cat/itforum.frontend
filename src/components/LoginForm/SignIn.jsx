@@ -50,7 +50,7 @@ export const SignIn = ({onSubmit, errors}) => {
                                             <span className="form-label-description link-primary cursor-pointer">I forgot password</span>
                                         </label>
                                         <div className="input-group input-group-flat">
-                                            <Field type={showPassword? "password" : "text"} name="password" className="form-control" placeholder="Your password"
+                                            <Field type={!showPassword? "password" : "text"} name="password" className="form-control" placeholder="Your password"
                                                    autoComplete="off"/>
                                             <span className="input-group-text">
                     <span className="link-secondary cursor-pointer" data-bs-toggle="tooltip" aria-label="Show password"
