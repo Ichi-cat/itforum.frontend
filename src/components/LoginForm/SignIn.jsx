@@ -84,7 +84,7 @@ export const SignIn = ({onSubmit, errors, onResponse}) => {
                     <div className="card-body">
                         <div className="row">
                             <div className="col">
-                                <GitHubAuthenticate/>
+                                <GitHubAuthenticate onResponse={onResponse}/>
                             </div>
                             <div className="col">
                                 <FacebookAuthenticate onResponse={onResponse}/>
