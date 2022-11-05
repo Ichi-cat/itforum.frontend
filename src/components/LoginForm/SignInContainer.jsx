@@ -28,6 +28,7 @@ const SignInContainer = () => {
         setErrors(error.data.Errors);
     }
     const onResponse = (data) => {
+        debugger;
         if(data.error) onFailed(data.error);
         else onSuccess(data.data);
         return data;
@@ -37,7 +38,7 @@ const SignInContainer = () => {
             .then(data => onResponse(data))
             .then(_ => {setSubmitting(false)})
     }
-    return (<SignIn onSubmit={onSubmit} errors={errors}/>);
+    return (<SignIn onSubmit={onSubmit} errors={errors} onResponse={onResponse}/>);
 }
 
 export default compose(

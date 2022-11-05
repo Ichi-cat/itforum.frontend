@@ -6,8 +6,7 @@ import {useState} from "react";
 import * as Yup from 'yup'
 
 
-export const SignIn = ({onSubmit, errors}) => {
-    debugger;
+export const SignIn = ({onSubmit, errors, onResponse}) => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const showPasswordOnClick = () => {
@@ -88,7 +87,7 @@ export const SignIn = ({onSubmit, errors}) => {
                                 <GitHubAuthenticate/>
                             </div>
                             <div className="col">
-                                <FacebookAuthenticate/>
+                                <FacebookAuthenticate onResponse={onResponse}/>
                             </div>
                         </div>
                     </div>
