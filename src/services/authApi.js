@@ -38,13 +38,21 @@ export const authAPI = createApi({
                 }
             ) {},
         }),
+        signUp: build.mutation({
+            query: ({userName, password, confirmPassword, email}) => ({
+                url: '/Auth/SignUp',
+                method: 'POST',
+                body: {userName, password, confirmPassword, email}
+            }),
+        }),
         facebookAuthentication: build.mutation({
             query: (accessToken) => ({
                 url: '/Auth/SignInFacebook/facebook',
                 method: 'POST',
                 params: {
                     token: accessToken
-                }
+                },
+                body: {email: "testing@gmail.com"}
             })
         }),
         githubAuthentication: build.mutation({
@@ -53,7 +61,8 @@ export const authAPI = createApi({
                 method: 'POST',
                 params: {
                     code: code
-                }
+                },
+                body: {}
             })
         })
     })
