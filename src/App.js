@@ -1,9 +1,10 @@
-import './css/tabler.min.css'
+import '@tabler/core/dist/css/tabler.min.css'
+import '@tabler/core/dist/js/tabler.min'
+import './App.css';
 import Header from "./components/Header/Header";
 import TopicList from "./components/TopicList/TopicList";
 import {Route, Routes} from "react-router-dom"
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
-import './App.css';
 import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {setToken} from "./store/reducers/AuthReducer";

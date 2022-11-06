@@ -11,3 +11,9 @@
 .theme-light .hideThemeLight {
     display: none;
 }
+.page {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100vh;
+}
