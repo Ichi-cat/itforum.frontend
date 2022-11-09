@@ -20,5 +20,13 @@ export const userAPI = createApi({
                 }
             })
         }),
+        getFullUserInformation: build.query({
+            query: (accessToken) => ({
+                url: '/User/FullInfo',
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                }
+            })
+        }),
     })
 });

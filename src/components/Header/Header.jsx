@@ -97,7 +97,7 @@ const Header = ({setDark}) => {
                             </a>
                             <div className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                 <a href="#" className="dropdown-item">Set status</a>
-                                <a href="#" className="dropdown-item">Profile &amp; account</a>
+                                <Link to="/profile" className="dropdown-item">Profile</Link>
                                 <a href="#" className="dropdown-item">Feedback</a>
                                 <div className="dropdown-divider"></div>
                                 <a href="#" className="dropdown-item">Settings</a>

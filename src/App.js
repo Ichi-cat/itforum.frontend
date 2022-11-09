@@ -25,6 +25,7 @@ function App() {
               <Route path="tags" element={<TopicList/>}/>
               <Route path="users" element={<TopicList/>}/>
               <Route path="/profile" element={<ProfileInfo/>}/>
+              <Route path="/profile/:profileId" element={<ProfileInfo/>}/>
           {/*    routings for pages with header*/}
           </Route>
           <Route path="/SignIn" element={<SignInContainer/>}/>
