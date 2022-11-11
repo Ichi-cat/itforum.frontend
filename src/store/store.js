@@ -16,4 +16,5 @@ export const store = configureStore({
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(topicAPI.middleware)
             .concat(authAPI.middleware)
+            .concat(userAPI.middleware)
 });

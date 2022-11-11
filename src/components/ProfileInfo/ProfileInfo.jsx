@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import MeProfile from "../../img/20220721_145514.jpg";
 import {userAPI} from "../../services/userApi";
@@ -7,11 +7,14 @@ import ProfilePlaceHolder from "../placeholders/ProfilePlaceHolder/ProfilePlaceH
 import DescriptionPlaceHolder from "../placeholders/DescriptionPlaceHolder/DescriptionPlaceHolder";
 import ListPlaceHolder from "../placeholders/ListPlaceHolder/ListPlaceHolder";
 import TopicPlaceHolder from "../placeholders/TopicPlaceHolder/TopicPlaceHolder";
+import UploadWindow from "../UploadWindow/UploadWindow";
 
 const ProfileDetails = (props) => {
+    const [isModuleOpen, setIsModuleOpen] = useState(false);
     let profileId = useParams().profileId?.toString();
     const token = useSelector((state) => state.auth.token);
-    const { data: userInfo, isLoading: isUserInfoLoading1, isFetching, isError } = userAPI.useGetFullUserInformationQuery(token);
+    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery(token);
+    console.log(isUserInfoFetching);
     function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -25,25 +28,28 @@ const ProfileDetails = (props) => {
 
         return [year, month, day].join('-');
     }
-    const isUserInfoLoading = false;
     const isLikedPostsLoading = false;
     const isTopicsLoading = false;
+    console.log(userInfo)
     return (
         <div className="container text-center">
+            {isModuleOpen && <UploadWindow closeModule={() => setIsModuleOpen(false)} onSuccess={refetch}/>}
+            <button className="btn" onClick={() => setIsModuleOpen(true)}></button>
             <div className="row justify-content-md-center">
                 <div className="col-lg-3 col-md-10 col-sm-12 mt-3">
-                    {!isUserInfoLoading && <div className="card card-body h-100">
-                        <span className="avatar userAvatar"
-                              style={{backgroundImage: `url(${userInfo? userInfo.avatar:""})`, margin: "0 auto"}}/>
+                    {!isUserInfoFetching && <div className="card card-body h-100">
+                        <span className="avatar userAvatar" key={userInfo.avatar}
+                              style={{backgroundImage: `url(${userInfo? userInfo.avatar:""})`, margin: "0 auto",
+                                  display: isUserInfoFetching?"none":"inline-flex"}}/>
                         <h3 className="form-control-plaintext">{userInfo && userInfo.userName}</h3>
                         <h4>{userInfo && userInfo.fullName}</h4>
                         <h5>Programmer</h5>
                         <h5>E-Mail: {userInfo && userInfo.email}</h5>
                     </div>}
-                    {isUserInfoLoading && <ProfilePlaceHolder/>}
+                    {isUserInfoFetching && <ProfilePlaceHolder/>}
                 </div>
                 <div className="col-lg-9 col-md-10 col-sm-12 mt-3">
-                    {!isUserInfoLoading && <div className="card card-body markdown h-100 text-start divide-y">
+                    {!isUserInfoFetching && <div className="card card-body markdown h-100 text-start divide-y">
                         <div className="row">
                             <div className="card-title">Basic info</div>
                             <div className="col-6">
@@ -142,7 +148,7 @@ const ProfileDetails = (props) => {
                             </p>
                         </div>
                     </div>}
-                    {isUserInfoLoading && <DescriptionPlaceHolder/>}
+                    {isUserInfoFetching && <DescriptionPlaceHolder/>}
                 </div>
             </div>
             <div className="row mt-3 justify-content-md-center">
