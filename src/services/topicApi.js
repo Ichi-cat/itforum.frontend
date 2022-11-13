@@ -12,10 +12,12 @@ export const topicAPI = createApi({
     }),
     endpoints: (build) => ({
         fetchAllTopics: build.query({
-            query: (accessToken) => ({
-                url: '/topic',
+            query: ({accessToken, page, pageSize, sort}) => ({
+                url: '/topic/TypeOfSort',
                 params: {
-                    count: 10
+                    page,
+                    pageSize,
+                    sort
                 },
                 headers: {
                     "authorization": `Bearer ${accessToken}`
