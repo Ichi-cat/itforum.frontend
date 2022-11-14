@@ -17,7 +17,6 @@ export const authSlice = createSlice({
             localStorage.removeItem("token");
         },
         setToken: (state, action) => {
-            debugger;
             state.token = action.payload;
             state.isAuth = true;
             localStorage.setItem("token", action.payload)

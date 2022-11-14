@@ -3,7 +3,6 @@ import {Link, useSearchParams} from "react-router-dom";
 
 const Paginator = ({pagesCount = 30}) => {
     const [searchParams, setSearchParams] = useSearchParams();
-    debugger;
     let currentPage = Number(searchParams.get("page"));
     if(!currentPage) {
         currentPage = 1;
@@ -12,7 +11,6 @@ const Paginator = ({pagesCount = 30}) => {
     const pages = [1];
     const startPage = (currentPage>5? (currentPage - 4): 2)
     const endPage = (((currentPage+5)>pagesCount)?pagesCount:(currentPage + 5))
-    debugger;
     for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
     }

@@ -10,7 +10,6 @@ const Header = ({setDark}) => {
     const token = useSelector((state) => state.auth.token);
     const userInfo = userAPI.useGetUserInformationQuery(token, {skip: !isAuthorized});
     const dispatch = useDispatch();
-    debugger;
     const setDarkTheme = () => {
         localStorage.setItem("theme", "dark");
         setDark(true);

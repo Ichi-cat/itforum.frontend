@@ -28,7 +28,6 @@ const SignInContainer = () => {
         setErrors(error.data.Errors);
     }
     const onResponse = (data) => {
-        debugger;
         if(data.error) onFailed(data.error);
         else onSuccess(data.data);
         return data;
