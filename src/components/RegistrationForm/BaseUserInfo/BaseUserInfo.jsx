@@ -13,7 +13,7 @@ const BaseUserInfo = ({errors, onSubmit}) => {
         firstName: Yup.string().required('Required').max(32),
         lastName: Yup.string().max(32),
         birthDate: Yup.date().required('Required').max(new Date(), "You're too young"),
-        location: Yup.string().max(32)
+        location: Yup.string().max(32).nullable()
     });
     return (
         <div>

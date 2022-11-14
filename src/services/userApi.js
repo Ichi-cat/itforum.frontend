@@ -28,6 +28,16 @@ export const userAPI = createApi({
                 }
             })
         }),
+        updateUserInfo: build.mutation({
+            query: ({accessToken, userInfo}) => ({
+                url: '/User',
+                method: "PUT",
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
+                body: userInfo
+            })
+        }),
         setUserAvatar: build.mutation({
             query: ({accessToken, formData}) => ({
                 url: '/User/Upload',

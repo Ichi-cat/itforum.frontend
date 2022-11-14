@@ -15,7 +15,7 @@ const ProfileCard = () => {
                                 <span className="avatar avatar-xl avatar-rounded"
                                       style={{backgroundImage: `url(${userInfo && userInfo.avatar})`}}/>
                 </div>
-                <div className="card-title mb-1">{userInfo.firstName} {userInfo.lastName}</div>
+                <div className="card-title mb-1">{userInfo && userInfo.fullName}</div>
                 <div className="text-muted">Programmer</div>
             </div>
             <Link to="/profile" className="card-btn">View full profile</Link>
