@@ -10,6 +10,7 @@ import {useDispatch} from "react-redux";
 import {setToken} from "./store/reducers/AuthReducer";
 import SignInContainer from "./components/LoginForm/SignInContainer";
 import SignUpContainer from "./components/RegistrationForm/SignUpContainer";
+import TopicListByTag from "./components/TopicListByTag/TopicListByTag";
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Header setDark={setDark}/>}>
               <Route index element={<TopicList/>}/>
               <Route path="list" element={<TopicList/>}/>
+              <Route path="/byTag/:tag" element={<TopicListByTag/>}/>
               <Route path="tags" element={<TopicList/>}/>
               <Route path="users" element={<TopicList/>}/>
               <Route path="/profile" element={<ProfileInfo/>}/>
