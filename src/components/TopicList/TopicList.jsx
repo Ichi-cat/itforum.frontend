@@ -6,9 +6,15 @@ import {useSelector} from "react-redux";
 import {useState} from "react";
 import {useSearchParams} from "react-router-dom";
 import Paginator from "../common/Paginator/Paginator";
-import {Field, Form, Formik} from "formik";
+import Sorting from "../common/Sorting/Sorting";
 
 const TopicList = () => {
+    const [sortList, setSortList] = useState([
+        {value: "0", title: "By Date"},
+        {value: "1", title: "By Date Descending"},
+        {value: "2", title: "By Likes"}
+    ]);
+
     const [sort, setSort] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
     let currentPage = +searchParams.get("page");
@@ -25,22 +31,7 @@ const TopicList = () => {
                 </div>
                 <div className="col-lg-7 col-md-8 col-sm-12">
                         <div className="mb-3">
-                            <Formik initialValues={{sort: sort}} onSubmit={(values, {setSubmitting}) => {
-                                setSort(values.sort)
-                                setSubmitting(false);
-                            }}>
-                                {({isSubmitting, handleSubmit}) => (
-                                    <Form>
-                                        <Field as="select" className="form-select" name="sort" onInput={handleSubmit}
-                                               placeholder="Select a sort" tabIndex="-1">
-                                            <option value="0">By Date</option>
-                                            <option value="1">By Date Descending</option>
-                                            <option value="2">By Likes</option>
-                                        </Field>
-                                    </Form>
-                                )
-                                }
-                            </Formik>
+                            <Sorting sortingList={sortList} initialSort={sortList[0]} onSortInput={setSort} />
                         </div>
                     <div>
                         <Paginator/>
