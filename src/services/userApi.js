@@ -20,5 +20,24 @@ export const userAPI = createApi({
                 },
             })
         }),
+        getFullUserInformation: build.query({
+            query: (accessToken) => ({
+                url: '/User/FullInfo',
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                }
+            })
+        }),
+        setUserAvatar: build.mutation({
+            query: ({accessToken, formData}) => ({
+                url: '/User/Upload',
+                method: "POST",
+                headers: {
+
+                    "authorization": `Bearer ${accessToken}`
+                },
+                body: formData
+            })
+        })
     })
 });

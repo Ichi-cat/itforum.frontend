@@ -1,24 +1,18 @@
 import React from 'react';
 import {facebookConfig} from "../../../config";
-import {authAPI, setJwtToken} from "../../../services/authApi";
+import {authAPI} from "../../../services/authApi";
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import {useDispatch, useSelector} from "react-redux";
-import {setToken} from "../../../store/reducers/AuthReducer";
-import {useNavigate} from "react-router-dom";
 
-const FacebookAuthenticate = () => {
-    const isAuthorized = useSelector((state) => state.auth.isAuth);
-    const navigate = useNavigate();
-    if(isAuthorized) navigate("/");
+const FacebookAuthenticate = ({onResponse}) => {
     const [facebookAuthenticate, {facebookStatus}] = authAPI.useFacebookAuthenticationMutation();
-    const dispatch = useDispatch();
     const responseFacebook = (response) => {
-        if(response.status == 'undefined'){
-            //todo:Authentication is failed
+        if(response.status == 'unknown' || response.error){
+            onResponse({error: {data: {Errors: [{Message: "Authentication is failed"}]}}});
             return;
         }
+
         facebookAuthenticate(response.accessToken).then(data =>
-            dispatch(setToken(data.data.token)));
+            onResponse(data));
         //response.accessToken
     }
     return (
