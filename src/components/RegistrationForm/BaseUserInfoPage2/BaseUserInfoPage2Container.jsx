@@ -1,10 +1,9 @@
 import React, {useState} from "react";
-import {connect, useDispatch} from "react-redux";
-import SignIn from "./SignIn";
-import {authAPI} from "../../services/authApi";
-import {setToken} from "../../store/reducers/AuthReducer";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {compose} from "@reduxjs/toolkit";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {userAPI} from "../../../services/userApi";
+import {useNavigate} from "react-router-dom";
+import BaseUserInfoPage2 from "./BaseUserInfoPage2";
 
 
 const mapStateToProps = (state) => {
@@ -14,14 +13,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {};
 
 
-const SignInContainer = () => {
-    const [sighIn, {status}] = authAPI.useSignInMutation();
-    const dispatch = useDispatch();
+const BaseUserInfoPage2Container = () => {
+    const [updateInfo, {status}] = userAPI.useUpdateUserInfoMutation();
+    const accessToken = useSelector((state) => state.auth.token);
+    const navigate = useNavigate();
     const [errors, setErrors] = useState([]);
     const onSuccess = (data) => {
-        //data.token
-        console.log(data.token);
-        dispatch(setToken(data.token));
+        navigate("/");
     }
     const onFailed = (error) => {
         //error.data.Errors
@@ -33,14 +31,16 @@ const SignInContainer = () => {
         return data;
     }
     const onSubmit = (values, {setSubmitting}) => {
-        sighIn({userName: values.login, password: values.password})
+        debugger;
+        updateInfo({accessToken, userInfo: {
+            ...values
+            }})
             .then(data => onResponse(data))
             .then(_ => {setSubmitting(false)})
     }
-    return (<SignIn onSubmit={onSubmit} errors={errors} onResponse={onResponse}/>);
+    return (<BaseUserInfoPage2 onSubmit={onSubmit} errors={errors}/>);
 }
 
 export default compose(
-    withAuthRedirect("/"),
     connect(mapStateToProps, mapDispatchToProps)
-)(SignInContainer);
+)(BaseUserInfoPage2Container);

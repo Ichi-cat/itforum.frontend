@@ -17,7 +17,7 @@ export const userAPI = createApi({
                 url: '/User',
                 headers: {
                     "authorization": `Bearer ${accessToken}`
-                }
+                },
             })
         }),
         getFullUserInformation: build.query({
@@ -26,6 +26,16 @@ export const userAPI = createApi({
                 headers: {
                     "authorization": `Bearer ${accessToken}`
                 }
+            })
+        }),
+        updateUserInfo: build.mutation({
+            query: ({accessToken, userInfo}) => ({
+                url: '/User',
+                method: "PUT",
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
+                body: userInfo
             })
         }),
         setUserAvatar: build.mutation({

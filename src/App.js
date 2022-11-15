@@ -10,6 +10,8 @@ import {useDispatch} from "react-redux";
 import {setToken} from "./store/reducers/AuthReducer";
 import SignInContainer from "./components/LoginForm/SignInContainer";
 import SignUpContainer from "./components/RegistrationForm/SignUpContainer";
+import BaseUserInfoContainer from "./components/RegistrationForm/BaseUserInfo/BaseUserInfoContainer";
+import BaseUserInfoPage2Container from "./components/RegistrationForm/BaseUserInfoPage2/BaseUserInfoPage2Container";
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -30,6 +32,8 @@ function App() {
           </Route>
           <Route path="/SignIn" element={<SignInContainer/>}/>
           <Route path="/SignUp" element={<SignUpContainer/>}/>
+          <Route path="/info/1" element={<BaseUserInfoContainer/>}/>
+          <Route path="/info/2" element={<BaseUserInfoPage2Container/>}/>
           {/*    routings for pages without header*/}
           {/*https://reactrouter.com/en/main/start/overview*/}
       </Routes>
