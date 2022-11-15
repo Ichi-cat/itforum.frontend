@@ -16,7 +16,8 @@ const ProfileDetails = (props) => {
     const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery(token);
     console.log(isUserInfoFetching);
     function formatDate(date) {
-        var d = new Date(date),
+        if(!date) return "";
+        let d = new Date(date),
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
             year = d.getFullYear();

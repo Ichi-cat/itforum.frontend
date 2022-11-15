@@ -41,6 +41,6 @@ const SignInContainer = () => {
 }
 
 export default compose(
-    withAuthRedirect,
+    withAuthRedirect("/"),
     connect(mapStateToProps, mapDispatchToProps)
 )(SignInContainer);
