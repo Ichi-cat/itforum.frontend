@@ -11,3 +11,18 @@
 .theme-light .hideThemeLight {
     display: none;
 }
+.page {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100vh;
+}
+
+.crop-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 80px;
+    min-height: 30vh;
+}
