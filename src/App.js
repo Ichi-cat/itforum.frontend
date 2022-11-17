@@ -7,6 +7,7 @@ import {Route, Routes} from "react-router-dom"
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
 import './App.css';
 import {useState} from "react";
+import TagList from "./components/TagList/TagList";
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -16,7 +17,7 @@ function App() {
           <Route path="/" element={<Header setDark={setDark}/>}>
               <Route index element={<TopicList/>}/>
               <Route path="list" element={<TopicList/>}/>
-              <Route path="tags" element={<TopicList/>}/>
+              <Route path="tags" element={<TagList/>}/>
               <Route path="users" element={<TopicList/>}/>
               <Route path="/profile" element={<ProfileInfo/>}/>
           {/*    routings for pages with header*/}
