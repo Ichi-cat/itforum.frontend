@@ -6,6 +6,7 @@ import TopicList from "./components/TopicList/TopicList";
 import {Route, Routes} from "react-router-dom"
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
 import {useState} from "react";
+import TagList from "./components/TagList/TagList";
 import {useDispatch} from "react-redux";
 import {setToken} from "./store/reducers/AuthReducer";
 import SignInContainer from "./components/LoginForm/SignInContainer";
@@ -25,7 +26,8 @@ function App() {
           <Route path="/" element={<Header setDark={setDark}/>}>
               <Route index element={<TopicList/>}/>
               <Route path="list" element={<TopicList/>}/>
-              <Route path="tags" element={<TopicList/>}/>
+
+              <Route path="tags" element={<TagList/>}/>
               <Route path="users" element={<UserList/>}/>
               <Route path="/profile" element={<ProfileInfo/>}/>
               <Route path="/profile/:profileId" element={<ProfileInfo/>}/>
