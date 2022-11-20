@@ -12,6 +12,7 @@ import SignInContainer from "./components/LoginForm/SignInContainer";
 import SignUpContainer from "./components/RegistrationForm/SignUpContainer";
 import BaseUserInfoContainer from "./components/RegistrationForm/BaseUserInfo/BaseUserInfoContainer";
 import BaseUserInfoPage2Container from "./components/RegistrationForm/BaseUserInfoPage2/BaseUserInfoPage2Container";
+import UserList from "./components/UserList/UserList";
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -25,7 +26,7 @@ function App() {
               <Route index element={<TopicList/>}/>
               <Route path="list" element={<TopicList/>}/>
               <Route path="tags" element={<TopicList/>}/>
-              <Route path="users" element={<TopicList/>}/>
+              <Route path="users" element={<UserList/>}/>
               <Route path="/profile" element={<ProfileInfo/>}/>
               <Route path="/profile/:profileId" element={<ProfileInfo/>}/>
           {/*    routings for pages with header*/}
