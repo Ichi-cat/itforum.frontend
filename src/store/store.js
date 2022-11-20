@@ -8,7 +8,7 @@ import {userAPI} from "../services/userApi";
 const rootReducer = combineReducers({
     [topicAPI.reducerPath]: topicAPI.reducer,
     [tagApi.reducerPath]:tagApi.reducer,
-    [authAPI.reducerPath]: authAPI.reducer
+    [authAPI.reducerPath]: authAPI.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
     auth: authReducer
 });
