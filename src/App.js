@@ -14,6 +14,8 @@ import SignUpContainer from "./components/RegistrationForm/SignUpContainer";
 import BaseUserInfoContainer from "./components/RegistrationForm/BaseUserInfo/BaseUserInfoContainer";
 import BaseUserInfoPage2Container from "./components/RegistrationForm/BaseUserInfoPage2/BaseUserInfoPage2Container";
 import UserList from "./components/UserList/UserList";
+import ForgetPasswordContainer from "./components/ForgetPassword/ForgetPasswordContainer";
+import ResetPasswordContainer from "./components/ResetPassword/ResetPasswordContainer";
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -35,6 +37,8 @@ function App() {
           </Route>
           <Route path="/SignIn" element={<SignInContainer/>}/>
           <Route path="/SignUp" element={<SignUpContainer/>}/>
+          <Route path="/ResetPassword" element={<ResetPasswordContainer/>}/>
+          <Route path="/ForgetPassword" element={<ForgetPasswordContainer/>}/>
           <Route path="/info/1" element={<BaseUserInfoContainer/>}/>
           <Route path="/info/2" element={<BaseUserInfoPage2Container/>}/>
           {/*    routings for pages without header*/}
