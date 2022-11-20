@@ -34,7 +34,7 @@ const TopicList = () => {
                             <Sorting sortingList={sortList} initialSort={sortList[0]} onSortInput={setSort} />
                         </div>
                     <div>
-                        <Paginator/>
+                        <Paginator pagesCount={topics?topics.pageCount : 1}/>
                     </div>
                     <div>
                         {!isFetching && topics && topics.topics.map(topic => <TopicItem topic={topic} key={topic.id}/>)}

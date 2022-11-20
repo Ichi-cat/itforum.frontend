@@ -1,5 +1,5 @@
 import React from 'react';
-import MeProfile from "../../../img/20220721_145514.jpg";
+import {FaUserSecret} from 'react-icons/fa'
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {userAPI} from "../../../services/userApi";
@@ -12,8 +12,9 @@ const ProfileCard = () => {
         <div className="card mx-auto" style={{margin: "0 auto"}}>
             <div className="card-body text-center">
                 <div className="mb-3">
-                                <span className="avatar avatar-xl avatar-rounded"
-                                      style={{backgroundImage: `url(${userInfo && userInfo.avatar})`}}/>
+                    {userInfo && userInfo.avatar? <span className="avatar avatar-xl avatar-rounded"
+                                      style={{backgroundImage: `url(${userInfo && userInfo.avatar})`}}/>:
+                        <FaUserSecret className="avatar avatar-xl avatar-rounded"/>}
                 </div>
                 <div className="card-title mb-1">{userInfo && userInfo.fullName}</div>
                 <div className="text-muted">Programmer</div>

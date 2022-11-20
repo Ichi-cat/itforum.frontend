@@ -13,7 +13,7 @@ export const topicAPI = createApi({
     endpoints: (build) => ({
         fetchAllTopics: build.query({
             query: ({accessToken, page, pageSize, sort}) => ({
-                url: '/topic/TypeOfSort',
+                url: '/topic',
                 params: {
                     page,
                     pageSize,
