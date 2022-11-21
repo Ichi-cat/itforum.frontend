@@ -11,6 +11,7 @@ import {useDispatch} from "react-redux";
 import {setToken} from "./store/reducers/AuthReducer";
 import SignInContainer from "./components/LoginForm/SignInContainer";
 import SignUpContainer from "./components/RegistrationForm/SignUpContainer";
+import TopicListByTag from "./components/TopicListByTag/TopicListByTag";
 import BaseUserInfoContainer from "./components/RegistrationForm/BaseUserInfo/BaseUserInfoContainer";
 import BaseUserInfoPage2Container from "./components/RegistrationForm/BaseUserInfoPage2/BaseUserInfoPage2Container";
 import UserList from "./components/UserList/UserList";
@@ -28,7 +29,7 @@ function App() {
           <Route path="/" element={<Header setDark={setDark}/>}>
               <Route index element={<TopicList/>}/>
               <Route path="list" element={<TopicList/>}/>
-
+              <Route path="/byTag/:tag" element={<TopicListByTag/>}/>
               <Route path="tags" element={<TagList/>}/>
               <Route path="users" element={<UserList/>}/>
               <Route path="/profile" element={<ProfileInfo/>}/>

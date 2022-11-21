@@ -25,6 +25,21 @@ export const topicAPI = createApi({
             }),
             // transformResponse: (response, meta, arg) => response.data
         }),
+        fetchAllTopicsByTag: build.query({
+            query: ({accessToken, page, pageSize, sort, tagName}) => ({
+                url: '/topic/ByTag',
+                params: {
+                    page,
+                    pageSize,
+                    sort,
+                    tagName
+                },
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                }
+            }),
+            // transformResponse: (response, meta, arg) => response.data
+        }),
         fetchTopicDetails: build.query({
             query: (id) => ({
                 url: `/topic/${id}`
