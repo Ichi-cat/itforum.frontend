@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link, useParams} from "react-router-dom";
-import MeProfile from "../../img/20220721_145514.jpg";
+import {FaUserSecret} from "react-icons/fa";
 import {userAPI} from "../../services/userApi";
 import {useSelector} from "react-redux";
 import ProfilePlaceHolder from "../placeholders/ProfilePlaceHolder/ProfilePlaceHolder";
@@ -12,11 +12,12 @@ import UploadWindow from "../UploadWindow/UploadWindow";
 const ProfileDetails = (props) => {
     const [isModuleOpen, setIsModuleOpen] = useState(false);
     let profileId = useParams().profileId?.toString();
-    const token = useSelector((state) => state.auth.token);
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery(token);
+    const accessToken = useSelector((state) => state.auth.token);
+    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery({accessToken, profileId});
     console.log(isUserInfoFetching);
     function formatDate(date) {
-        var d = new Date(date),
+        if(!date) return "";
+        let d = new Date(date),
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
             year = d.getFullYear();
@@ -38,9 +39,11 @@ const ProfileDetails = (props) => {
             <div className="row justify-content-md-center">
                 <div className="col-lg-3 col-md-10 col-sm-12 mt-3">
                     {!isUserInfoFetching && <div className="card card-body h-100">
-                        <span className="avatar userAvatar" key={userInfo.avatar}
-                              style={{backgroundImage: `url(${userInfo? userInfo.avatar:""})`, margin: "0 auto",
+                        {userInfo.avatar?<span className="avatar userAvatar mx-auto" key={userInfo.avatar}
+                              style={{backgroundImage: `url(${userInfo? userInfo.avatar:""})`,
                                   display: isUserInfoFetching?"none":"inline-flex"}}/>
+                        :
+                            <FaUserSecret className="avatar userAvatar mx-auto"/>}
                         <h3 className="form-control-plaintext">{userInfo && userInfo.userName}</h3>
                         <h4>{userInfo && userInfo.fullName}</h4>
                         <h5>Programmer</h5>

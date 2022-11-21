@@ -45,6 +45,20 @@ export const authAPI = createApi({
                 body: {userName, password, confirmPassword, email}
             }),
         }),
+        getToken: build.mutation({
+            query: ({email, redirectUri}) => ({
+                url: '/Auth/GetToken',
+                method: 'POST',
+                body: {email, redirectUri}
+            }),
+        }),
+        resetPassword: build.mutation({
+            query: ({token, email, password, confirmPassword}) => ({
+                url: '/Auth/ResetPassword',
+                method: 'PUT',
+                body: {token, email, password, confirmPassword}
+            }),
+        }),
         facebookAuthentication: build.mutation({
             query: (accessToken) => ({
                 url: '/Auth/SignInFacebook/facebook',

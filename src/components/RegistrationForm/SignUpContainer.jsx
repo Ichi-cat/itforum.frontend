@@ -42,6 +42,6 @@ const SignUpContainer = () => {
 }
 
 export default compose(
-    withAuthRedirect,
+    withAuthRedirect("/info/1"),
     connect(mapStateToProps, mapDispatchToProps)
 )(SignUpContainer);
