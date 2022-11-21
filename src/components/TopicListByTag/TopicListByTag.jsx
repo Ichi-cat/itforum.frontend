@@ -3,10 +3,8 @@ import {useParams, useSearchParams} from "react-router-dom";
 import {topicAPI} from "../../services/topicApi";
 import TopicItem from "../TopicList/TopicItem/TopicItem";
 import {useSelector} from "react-redux";
-import ProfileCard from "../TopicList/ProfileCard/ProfileCard";
 import Sorting from "../common/Sorting/Sorting";
 import Paginator from "../common/Paginator/Paginator";
-import LastViewedCard from "../TopicList/LastViewedCard/LastViewedCard";
 
 const TopicListByTag = () => {
     const [sortList, setSortList] = useState([
@@ -22,7 +20,7 @@ const TopicListByTag = () => {
     if(!currentPage) currentPage = 1;
     const pageSize = 5;
     const accessToken = useSelector(state => state.auth.token);
-    const {data: topics, isFetching, refetch} = topicAPI.useFetchAllTopicsQuery({accessToken, page: currentPage, pageSize, sort});
+    const {data: topics, isFetching, refetch} = topicAPI.useFetchAllTopicsByTagQuery({accessToken, page: currentPage, pageSize, sort, tagName});
     return (
         <div className="container-xl">
             <div className="row mt-5 justify-content-md-center">
@@ -41,7 +39,7 @@ const TopicListByTag = () => {
                         <Sorting sortingList={sortList} initialSort={sortList[0]} onSortInput={setSort} />
                     </div>
                     <div>
-                        <Paginator/>
+                        <Paginator pagesCount={topics && topics.pageCount?topics.pageCount:1}/>
                     </div>
                     <div>
                         {!isFetching && topics && topics.topics.map(topic => <TopicItem topic={topic} key={topic.id}/>)}
