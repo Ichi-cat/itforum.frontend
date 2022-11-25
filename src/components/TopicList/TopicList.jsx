@@ -1,5 +1,4 @@
 import ProfileCard from "./ProfileCard/ProfileCard";
-import LastViewedCard from "./LastViewedCard/LastViewedCard";
 import TopicItem from "./TopicItem/TopicItem";
 import {topicAPI} from "../../services/topicApi";
 import {useSelector} from "react-redux";
@@ -14,7 +13,7 @@ const TopicList = () => {
         {value: "1", title: "By Date Descending"},
         {value: "2", title: "By Likes"}
     ]);
-
+    const isAuthorized = useSelector((state) => state.auth.isAuth);
     const [sort, setSort] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
     let currentPage = +searchParams.get("page");
@@ -27,7 +26,7 @@ const TopicList = () => {
             <button className="btn" onClick={() => refetch()}>Refresh</button>
             <div className="row mt-5 justify-content-md-center">
                 <div className="col-lg-2 col-md-8 col-sm-12">
-                    <ProfileCard/>
+                    {isAuthorized&&<ProfileCard/>}
                 </div>
                 <div className="col-lg-7 col-md-8 col-sm-12">
                         <div className="mb-3">
@@ -41,7 +40,7 @@ const TopicList = () => {
                     </div>
                 </div>
                 <div className="col-lg-2 col-md-8 col-sm-12">
-                    <LastViewedCard/>
+                    {/*<LastViewedCard/>*/}
                 </div>
             </div>
             {isFetching &&

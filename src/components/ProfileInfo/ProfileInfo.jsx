@@ -8,37 +8,27 @@ import DescriptionPlaceHolder from "../placeholders/DescriptionPlaceHolder/Descr
 import ListPlaceHolder from "../placeholders/ListPlaceHolder/ListPlaceHolder";
 import TopicPlaceHolder from "../placeholders/TopicPlaceHolder/TopicPlaceHolder";
 import UploadWindow from "../UploadWindow/UploadWindow";
+import {Navigate} from "react-router-dom";
 
 const ProfileDetails = (props) => {
     const [isModuleOpen, setIsModuleOpen] = useState(false);
-    let profileId = useParams().profileId?.toString();
+    const isAuthorized = useSelector((state) => state.auth.isAuth);
     const accessToken = useSelector((state) => state.auth.token);
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery({accessToken, profileId});
-    console.log(isUserInfoFetching);
-    function formatDate(date) {
-        if(!date) return "";
-        let d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-
-        return [year, month, day].join('-');
-    }
+    let profileId = useParams().profileId?.toString();
+    const { data: userInfo, isFetching: isUserInfoFetching, isError, error } = userAPI.useGetFullUserInformationQuery({accessToken, profileId}, {skip: !isAuthorized && !profileId});
     const isLikedPostsLoading = false;
     const isTopicsLoading = false;
-    console.log(userInfo)
+    if(isError) console.log(error.data)
+    debugger;
     return (
         <div className="container text-center">
-            {isModuleOpen && <UploadWindow closeModule={() => setIsModuleOpen(false)} onSuccess={refetch}/>}
-            <button className="btn" onClick={() => setIsModuleOpen(true)}></button>
+            {isError&&error.data.Errors.map(err=><p className="mt-1 text-danger">{err.Message}</p>)}
+            {!isAuthorized && !profileId && <Navigate to="/" replace/>}
+            {isModuleOpen && <UploadWindow closeModule={() => setIsModuleOpen(false)} onSuccess={() => {}}/>}
+            {/*<button className="btn" onClick={() => setIsModuleOpen(true)}></button>*/}
             <div className="row justify-content-md-center">
-                <div className="col-lg-3 col-md-10 col-sm-12 mt-3">
-                    {!isUserInfoFetching && <div className="card card-body h-100">
+                <div className="col-lg-3 col-md-10 col-sm-12 mt-1">
+                    {(!isUserInfoFetching && !isError) && <div className="card card-body h-100">
                         {userInfo.avatar?<span className="avatar userAvatar mx-auto" key={userInfo.avatar}
                               style={{backgroundImage: `url(${userInfo? userInfo.avatar:""})`,
                                   display: isUserInfoFetching?"none":"inline-flex"}}/>
@@ -49,10 +39,10 @@ const ProfileDetails = (props) => {
                         <h5>Programmer</h5>
                         <h5>E-Mail: {userInfo && userInfo.email}</h5>
                     </div>}
-                    {isUserInfoFetching && <ProfilePlaceHolder/>}
+                    {isUserInfoFetching || isError && <ProfilePlaceHolder/>}
                 </div>
-                <div className="col-lg-9 col-md-10 col-sm-12 mt-3">
-                    {!isUserInfoFetching && <div className="card card-body markdown h-100 text-start divide-y">
+                <div className="col-lg-9 col-md-10 col-sm-12 mt-1">
+                    {(!isUserInfoFetching && !isError) && <div className="card card-body markdown h-100 text-start divide-y">
                         <div className="row">
                             <div className="card-title">Basic info</div>
                             <div className="col-6">
@@ -151,7 +141,7 @@ const ProfileDetails = (props) => {
                             </p>
                         </div>
                     </div>}
-                    {isUserInfoFetching && <DescriptionPlaceHolder/>}
+                    {(isUserInfoFetching || isError) && <DescriptionPlaceHolder/>}
                 </div>
             </div>
             <div className="row mt-3 justify-content-md-center">
@@ -321,4 +311,20 @@ const ProfileDetails = (props) => {
         </div>
     );
 }
+
+function formatDate(date) {
+    if(!date) return "";
+    let d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 export default ProfileDetails;

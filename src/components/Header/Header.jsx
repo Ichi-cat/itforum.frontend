@@ -1,9 +1,9 @@
-import Me from '../../img/20220721_143949.jpg'
-import {useState} from "react";
 import {Link, NavLink, Outlet} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {userAPI} from "../../services/userApi";
 import {logOut} from "../../store/reducers/AuthReducer";
+import React from "react";
+import {FaUserSecret} from 'react-icons/fa'
 
 const Header = ({setDark}) => {
     const isAuthorized = useSelector((state) => state.auth.isAuth);
@@ -90,8 +90,9 @@ const Header = ({setDark}) => {
                         {isAuthorized && <>
                             <a href="#" className="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                                aria-label="Open user menu">
-                            <span className="avatar avatar-sm"
-                                  style={{backgroundImage: `url(${userInfo && userInfo.avatar})`}}></span>
+                                {userInfo && userInfo.avatar?<span className="avatar avatar-sm"
+                                  style={{backgroundImage: `url(${userInfo.avatar})`}}></span>:
+                                    <FaUserSecret className="avatar avatar-sm"/>}
 
                             </a>
                             <div className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -103,7 +104,7 @@ const Header = ({setDark}) => {
                                 <button className="dropdown-item" onClick={logOutOnClick}>Logout</button>
                             </div>
                         </>}
-                        {!isAuthorized && <Link to="/SignIn" className="btn bg-dark">Sign In</Link>}
+                        {!isAuthorized && <Link to="/SignIn" className="btn">Sign In</Link>}
                     </div>
                 </div>
             </div>

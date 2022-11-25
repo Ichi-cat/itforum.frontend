@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, useSearchParams} from "react-router-dom";
 
-const Paginator = ({pagesCount = 30}) => {
+const Paginator = ({pagesCount = 1}) => {
     const [searchParams, setSearchParams] = useSearchParams();
     let currentPage = Number(searchParams.get("page"));
     if(!currentPage) {

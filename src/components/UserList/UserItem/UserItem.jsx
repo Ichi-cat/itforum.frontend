@@ -11,6 +11,7 @@ const UserItem = ({user}) => {
     const[subscribe, _data] = userAPI.useSubscribeMutation();
     const[unsubscribe, _] = userAPI.useUnsubscribeMutation();
     const accessToken = useSelector(state => state.auth.token);
+    const isAuthorized = useSelector((state) => state.auth.isAuth);
     const subscribeOnClick = () => {
         setIsSubscribeDisabled(true);
         subscribe({accessToken, id: user.id}).then(data => {
@@ -36,6 +37,7 @@ const UserItem = ({user}) => {
                     <span className="badge bg-purple-lt">User</span>
                 </div>
             </div>
+            {isAuthorized&&
             <div className="d-flex">
                 <button className="btn card-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" className="icon me-2 text-muted" width="24"
@@ -52,7 +54,7 @@ const UserItem = ({user}) => {
                     <button className="btn card-btn" onClick={unsubscribeOnClick} disabled={isSubscribeDisabled}>
                     <AiOutlineMinus className="mx-1"/>
                     Unsubscribe</button>}
-            </div>
+            </div>}
         </div>
     );
 };
