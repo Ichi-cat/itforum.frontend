@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 const BaseUserInfo = ({errors, onSubmit}) => {
     const navigate = useNavigate();
     const token = useSelector((state) => state.auth.token);
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery(token);
+    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery({accessToken: token});
     const validateForm = Yup.object().shape({
         firstName: Yup.string().required('Required').max(32),
         lastName: Yup.string().max(32),
@@ -25,10 +25,10 @@ const BaseUserInfo = ({errors, onSubmit}) => {
                         </a>
                     </div>
                     {!isUserInfoFetching && <Formik initialValues={{
-                        firstName: userInfo.firstName,
-                        lastName: userInfo.lastName,
-                        birthDate: userInfo.birthDate?userInfo.birthDate.split("T")[0]:"",
-                        location: userInfo.location
+                        firstName: userInfo?userInfo.firstName:"",
+                        lastName: userInfo?userInfo.lastName:"",
+                        birthDate: userInfo?userInfo.birthDate?userInfo.birthDate.split("T")[0]:"":"",
+                        location: userInfo?userInfo.location:""
                     }} onSubmit={onSubmit}
                             validationSchema={validateForm}>
                         {({isSubmitting}) => (<Form className="card card-md" autoComplete="off" noValidate>

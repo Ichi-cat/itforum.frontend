@@ -23,7 +23,8 @@ export const userAPI = createApi({
                     pageSize,
                     sort
                 }
-            })
+            }),
+            providesTags: result => ['User']
         }),
         subscribe: build.mutation({
             query: ({accessToken, id}) => ({
@@ -55,7 +56,8 @@ export const userAPI = createApi({
                 headers: {
                     "authorization": `Bearer ${accessToken}`
                 },
-            })
+            }),
+            providesTags: result => ['User']
         }),
         getFullUserInformation: build.query({
             query: ({accessToken, profileId}) => ({
@@ -63,7 +65,8 @@ export const userAPI = createApi({
                 headers: {
                     "authorization": `Bearer ${accessToken}`
                 },
-            })
+            }),
+            providesTags: result => ['User']
         }),
         updateUserInfo: build.mutation({
             query: ({accessToken, userInfo}) => ({
@@ -73,7 +76,8 @@ export const userAPI = createApi({
                     "authorization": `Bearer ${accessToken}`
                 },
                 body: userInfo
-            })
+            }),
+            invalidatesTags: ['User']
         }),
         setUserAvatar: build.mutation({
             query: ({accessToken, formData}) => ({
@@ -84,7 +88,8 @@ export const userAPI = createApi({
                     "authorization": `Bearer ${accessToken}`
                 },
                 body: formData
-            })
+            }),
+            invalidatesTags: ['User']
         })
     })
 });

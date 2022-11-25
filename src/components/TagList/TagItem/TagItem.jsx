@@ -6,7 +6,7 @@ const TagItem = ({tag}) => {
     const navigate = useNavigate();
     debugger
     return (
-        <div onClick={() => navigate(`details/${tag.name}`)} className="col-lg-3 card mx-1 center-block mb-3">
+        <div onClick={() => navigate(`/bytag/${tag.name}`)} className="col-lg-3 card mx-1 center-block mb-3">
             <div className="card-header">
                 <h3 className="card-title cursor-pointer">{tag.name}</h3>
             </div>
