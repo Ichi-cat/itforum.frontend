@@ -9,6 +9,7 @@ import ListPlaceHolder from "../placeholders/ListPlaceHolder/ListPlaceHolder";
 import TopicPlaceHolder from "../placeholders/TopicPlaceHolder/TopicPlaceHolder";
 import UploadWindow from "../UploadWindow/UploadWindow";
 import {Navigate} from "react-router-dom";
+import MyLikedTopicsCard from "./MyLikedTopicsCard";
 
 const ProfileDetails = (props) => {
     const [isModuleOpen, setIsModuleOpen] = useState(false);
@@ -19,7 +20,6 @@ const ProfileDetails = (props) => {
     const isLikedPostsLoading = false;
     const isTopicsLoading = false;
     if(isError) console.log(error.data)
-    debugger;
     return (
         <div className="container text-center">
             {isError&&error.data.Errors.map(err=><p className="mt-1 text-danger">{err.Message}</p>)}
@@ -146,26 +146,27 @@ const ProfileDetails = (props) => {
             </div>
             <div className="row mt-3 justify-content-md-center">
                 <div className="col-lg-3 col-md-3 col-sm-4">
-                    {!isLikedPostsLoading && <div className="card">
-                        <div className="card-header">
-                            <h3 className="card-title">Liked posts</h3>
-                        </div>
-                        <div className="list-group list-group-flush">
-                            <a href="#" className="list-group-item list-group-item-action"
-                               aria-current="true">
-                                First link item
-                            </a>
-                            <a href="#" className="list-group-item list-group-item-action">A second link
-                                item</a>
-                            <a href="#" className="list-group-item list-group-item-action">A third link item</a>
-                            <a href="#" className="list-group-item list-group-item-action">A fourth link
-                                item</a>
-                            <a className="list-group-item list-group-item-action disabled">A disabled link
-                                item</a>
-                        </div>
-                        <Link to="/likedPosts" className="card-btn">View all posts</Link>
-                    </div>}
-                    {isLikedPostsLoading && <ListPlaceHolder/>}
+                    <MyLikedTopicsCard/>
+                    {/*{!isLikedPostsLoading && <div className="card">*/}
+                    {/*    <div className="card-header">*/}
+                    {/*        <h3 className="card-title">Liked posts</h3>*/}
+                    {/*    </div>*/}
+                    {/*    <div className="list-group list-group-flush">*/}
+                    {/*        <a href="#" className="list-group-item list-group-item-action"*/}
+                    {/*           aria-current="true">*/}
+                    {/*            First link item*/}
+                    {/*        </a>*/}
+                    {/*        <a href="#" className="list-group-item list-group-item-action">A second link*/}
+                    {/*            item</a>*/}
+                    {/*        <a href="#" className="list-group-item list-group-item-action">A third link item</a>*/}
+                    {/*        <a href="#" className="list-group-item list-group-item-action">A fourth link*/}
+                    {/*            item</a>*/}
+                    {/*        <a className="list-group-item list-group-item-action disabled">A disabled link*/}
+                    {/*            item</a>*/}
+                    {/*    </div>*/}
+                    {/*    <Link to="/likedPosts" className="card-btn">View all posts</Link>*/}
+                    {/*</div>}*/}
+                    {/*{isLikedPostsLoading && <ListPlaceHolder/>}*/}
                 </div>
                 <div className="col-lg-9 col-md-7 col-sm-8">
                     {!isTopicsLoading && <div className="divide-y">
