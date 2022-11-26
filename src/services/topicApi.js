@@ -44,6 +44,20 @@ export const topicAPI = createApi({
             query: (id) => ({
                 url: `/topic/${id}`
             })
+        }),
+        fetchUsersTopics: build.query({
+            query: ({accessToken, UserId, page, pageSize, sort}) => ({
+                url: '/topic/ByUserId',
+                params: {
+                    UserId,
+                    page,
+                    pageSize,
+                    sort
+                },
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                }
+            }),
         })
     })
 });
