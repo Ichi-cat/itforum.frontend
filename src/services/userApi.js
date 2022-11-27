@@ -26,30 +26,6 @@ export const userAPI = createApi({
             }),
             providesTags: result => ['User']
         }),
-        subscribe: build.mutation({
-            query: ({accessToken, id}) => ({
-                url: '/User/Subscribe',
-                method: "PUT",
-                headers: {
-                    "authorization": `Bearer ${accessToken}`
-                },
-                params: {
-                    userId: id
-                }
-            })
-        }),
-        unsubscribe: build.mutation({
-            query: ({accessToken, id}) => ({
-                url: '/User/Unsubscribe',
-                method: "PUT",
-                headers: {
-                    "authorization": `Bearer ${accessToken}`
-                },
-                params: {
-                    userId: id
-                }
-            })
-        }),
         getUserInformation: build.query({
             query: (accessToken) => ({
                 url: '/User/info',

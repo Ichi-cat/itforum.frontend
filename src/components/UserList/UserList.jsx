@@ -20,7 +20,7 @@ const UserList = () => {
     const placeHolders = [];
     const accessToken = useSelector(state => state.auth.token);
     const [sort, setSort] = useState(0);
-    const {data, isFetching} = userAPI.useGetUserListQuery({accessToken, page, pageSize, sort});
+    const {data, isFetching, isLoading, refetch} = userAPI.useGetUserListQuery({accessToken, page, pageSize, sort});
     for(let i=1; i<=10; i++){
         placeHolders.push(i);
     }
@@ -32,8 +32,8 @@ const UserList = () => {
                 </div>
             </div>
             <div className="row row-cards mt-2">
-                {!isFetching && data?.users?.map(u => <div className="col-3"><UserItem user={u}/></div>)}
-                {isFetching && placeHolders.map(n => <div className="col-3"><ProfilePlaceHolder/></div>)}
+                {!isLoading && data?.users?.map(u => <div className="col-3"><UserItem refetch={refetch} user={u}/></div>)}
+                {isLoading && placeHolders.map(n => <div className="col-3"><ProfilePlaceHolder/></div>)}
             </div>
             <div className="row row-cards mt-1">
                 <div className="col-3">
