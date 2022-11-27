@@ -3,13 +3,13 @@ import {FaUserSecret} from "react-icons/fa";
 import {Link} from "react-router-dom";
 import {AiOutlinePlus, AiOutlineMinus} from 'react-icons/ai'
 import {useSelector} from "react-redux";
-import {userAPI} from "../../../services/userApi";
+import {subscribeAPI} from "../../../services/subscribeApi";
 
-const UserItem = ({user}) => {
+const UserItem = ({user, refetch}) => {
     const [isSubscribed, setIsSubscribed] = useState(user.isSubscribed);
     const [isSubscribeDisabled, setIsSubscribeDisabled] = useState(false);
-    const[subscribe, _data] = userAPI.useSubscribeMutation();
-    const[unsubscribe, _] = userAPI.useUnsubscribeMutation();
+    const[subscribe, _data] = subscribeAPI.useSubscribeMutation();
+    const[unsubscribe, _] = subscribeAPI.useUnsubscribeMutation();
     const accessToken = useSelector(state => state.auth.token);
     const isAuthorized = useSelector((state) => state.auth.isAuth);
     const subscribeOnClick = () => {
@@ -17,14 +17,14 @@ const UserItem = ({user}) => {
         subscribe({accessToken, id: user.id}).then(data => {
             if(!data.error) setIsSubscribed(true);
             setIsSubscribeDisabled(false);
-        });
+        }).then(()=>refetch());
     }
     const unsubscribeOnClick = () => {
         setIsSubscribeDisabled(true);
         unsubscribe({accessToken, id: user.id}).then(data => {
             if(!data.error) setIsSubscribed(false);
             setIsSubscribeDisabled(false);
-        });
+        }).then(()=>refetch());
     }
     return (
         <div className="card">
