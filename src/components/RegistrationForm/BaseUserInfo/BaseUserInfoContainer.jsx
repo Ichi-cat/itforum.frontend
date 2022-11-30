@@ -15,7 +15,6 @@ const mapDispatchToProps = {};
 
 const BaseUserInfoContainer = () => {
     const [updateInfo, {status}] = userAPI.useUpdateUserInfoMutation();
-    const accessToken = useSelector((state) => state.auth.token);
     const navigate = useNavigate();
     const [errors, setErrors] = useState([]);
     const onSuccess = (data) => {
@@ -31,7 +30,7 @@ const BaseUserInfoContainer = () => {
         return data;
     }
     const onSubmit = (values, {setSubmitting}) => {
-        updateInfo({accessToken, userInfo: {
+        updateInfo({userInfo: {
             ...values
             }})
             .then(data => onResponse(data))
