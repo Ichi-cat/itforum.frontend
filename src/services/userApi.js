@@ -12,21 +12,37 @@ export const userAPI = createApi({
         }
     }),
     endpoints: (build) => ({
-        getUserInformation: build.query({
-            query: (accessToken) => ({
+        getUserList: build.query({
+            query: ({accessToken, page, pageSize, sort}) => ({
                 url: '/User',
                 headers: {
                     "authorization": `Bearer ${accessToken}`
                 },
-            })
+                params: {
+                    page,
+                    pageSize,
+                    sort
+                }
+            }),
+            providesTags: result => ['User']
         }),
-        getFullUserInformation: build.query({
+        getUserInformation: build.query({
             query: (accessToken) => ({
-                url: '/User/FullInfo',
+                url: '/User/info',
                 headers: {
                     "authorization": `Bearer ${accessToken}`
-                }
-            })
+                },
+            }),
+            providesTags: result => ['User']
+        }),
+        getFullUserInformation: build.query({
+            query: ({accessToken, profileId}) => ({
+                url: `/User/FullInfo/${(profileId?profileId:'')}`,
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
+            }),
+            providesTags: result => ['User']
         }),
         updateUserInfo: build.mutation({
             query: ({accessToken, userInfo}) => ({
@@ -36,7 +52,8 @@ export const userAPI = createApi({
                     "authorization": `Bearer ${accessToken}`
                 },
                 body: userInfo
-            })
+            }),
+            invalidatesTags: ['User']
         }),
         setUserAvatar: build.mutation({
             query: ({accessToken, formData}) => ({
@@ -47,7 +64,8 @@ export const userAPI = createApi({
                     "authorization": `Bearer ${accessToken}`
                 },
                 body: formData
-            })
+            }),
+            invalidatesTags: ['User']
         })
     })
 });

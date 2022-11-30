@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link, useParams} from "react-router-dom";
-import MeProfile from "../../img/20220721_145514.jpg";
+import {FaUserSecret} from "react-icons/fa";
 import {userAPI} from "../../services/userApi";
 import {useSelector} from "react-redux";
 import ProfilePlaceHolder from "../placeholders/ProfilePlaceHolder/ProfilePlaceHolder";
@@ -8,49 +8,42 @@ import DescriptionPlaceHolder from "../placeholders/DescriptionPlaceHolder/Descr
 import ListPlaceHolder from "../placeholders/ListPlaceHolder/ListPlaceHolder";
 import TopicPlaceHolder from "../placeholders/TopicPlaceHolder/TopicPlaceHolder";
 import UploadWindow from "../UploadWindow/UploadWindow";
+import {Navigate} from "react-router-dom";
+import MyLikedTopicsCard from "./MyLikedTopicsCard";
+import UsersTopicsCard from "./UsersTopicsCard";
 
 const ProfileDetails = (props) => {
     const [isModuleOpen, setIsModuleOpen] = useState(false);
+    const isAuthorized = useSelector((state) => state.auth.isAuth);
+    const accessToken = useSelector((state) => state.auth.token);
     let profileId = useParams().profileId?.toString();
-    const token = useSelector((state) => state.auth.token);
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery(token);
-    console.log(isUserInfoFetching);
-    function formatDate(date) {
-        if(!date) return "";
-        let d = new Date(date),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDate(),
-            year = d.getFullYear();
-
-        if (month.length < 2)
-            month = '0' + month;
-        if (day.length < 2)
-            day = '0' + day;
-
-        return [year, month, day].join('-');
-    }
+    const { data: userInfo, isFetching: isUserInfoFetching, isError, error } = userAPI.useGetFullUserInformationQuery({accessToken, profileId}, {skip: !isAuthorized && !profileId});
     const isLikedPostsLoading = false;
     const isTopicsLoading = false;
-    console.log(userInfo)
+    if(isError) console.log(error.data)
     return (
         <div className="container text-center">
-            {isModuleOpen && <UploadWindow closeModule={() => setIsModuleOpen(false)} onSuccess={refetch}/>}
-            <button className="btn" onClick={() => setIsModuleOpen(true)}></button>
+            {isError&&error.data.Errors.map(err=><p className="mt-1 text-danger">{err.Message}</p>)}
+            {!isAuthorized && !profileId && <Navigate to="/" replace/>}
+            {isModuleOpen && <UploadWindow closeModule={() => setIsModuleOpen(false)} onSuccess={() => {}}/>}
+            {/*<button className="btn" onClick={() => setIsModuleOpen(true)}></button>*/}
             <div className="row justify-content-md-center">
-                <div className="col-lg-3 col-md-10 col-sm-12 mt-3">
-                    {!isUserInfoFetching && <div className="card card-body h-100">
-                        <span className="avatar userAvatar" key={userInfo.avatar}
-                              style={{backgroundImage: `url(${userInfo? userInfo.avatar:""})`, margin: "0 auto",
+                <div className="col-lg-3 col-md-10 col-sm-12 mt-1">
+                    {(!isUserInfoFetching && !isError) && <div className="card card-body h-100">
+                        {userInfo.avatar?<span className="avatar userAvatar mx-auto" key={userInfo.avatar}
+                              style={{backgroundImage: `url(${userInfo? userInfo.avatar:""})`,
                                   display: isUserInfoFetching?"none":"inline-flex"}}/>
+                        :
+                            <FaUserSecret className="avatar userAvatar mx-auto"/>}
                         <h3 className="form-control-plaintext">{userInfo && userInfo.userName}</h3>
                         <h4>{userInfo && userInfo.fullName}</h4>
                         <h5>Programmer</h5>
                         <h5>E-Mail: {userInfo && userInfo.email}</h5>
                     </div>}
-                    {isUserInfoFetching && <ProfilePlaceHolder/>}
+                    {isUserInfoFetching || isError && <ProfilePlaceHolder/>}
                 </div>
-                <div className="col-lg-9 col-md-10 col-sm-12 mt-3">
-                    {!isUserInfoFetching && <div className="card card-body markdown h-100 text-start divide-y">
+                <div className="col-lg-9 col-md-10 col-sm-12 mt-1">
+                    {(!isUserInfoFetching && !isError) && <div className="card card-body markdown h-100 text-start divide-y">
                         <div className="row">
                             <div className="card-title">Basic info</div>
                             <div className="col-6">
@@ -149,174 +142,34 @@ const ProfileDetails = (props) => {
                             </p>
                         </div>
                     </div>}
-                    {isUserInfoFetching && <DescriptionPlaceHolder/>}
+                    {(isUserInfoFetching || isError) && <DescriptionPlaceHolder/>}
                 </div>
             </div>
             <div className="row mt-3 justify-content-md-center">
                 <div className="col-lg-3 col-md-3 col-sm-4">
-                    {!isLikedPostsLoading && <div className="card">
-                        <div className="card-header">
-                            <h3 className="card-title">Liked posts</h3>
-                        </div>
-                        <div className="list-group list-group-flush">
-                            <a href="#" className="list-group-item list-group-item-action"
-                               aria-current="true">
-                                First link item
-                            </a>
-                            <a href="#" className="list-group-item list-group-item-action">A second link
-                                item</a>
-                            <a href="#" className="list-group-item list-group-item-action">A third link item</a>
-                            <a href="#" className="list-group-item list-group-item-action">A fourth link
-                                item</a>
-                            <a className="list-group-item list-group-item-action disabled">A disabled link
-                                item</a>
-                        </div>
-                        <Link to="/likedPosts" className="card-btn">View all posts</Link>
-                    </div>}
-                    {isLikedPostsLoading && <ListPlaceHolder/>}
+                    <MyLikedTopicsCard/>
                 </div>
                 <div className="col-lg-9 col-md-7 col-sm-8">
-                    {!isTopicsLoading && <div className="divide-y">
-                        <div className="card w-100 center-block mb-3">
-                            <div className="card-header"><h3 className="card-title cursor-pointer">1-st post</h3>
-                                <div className="card-actions btn-actions"><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
-                                        <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <polyline points="6 15 12 9 18 15"></polyline>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <circle cx="12" cy="12" r="1"></circle>
-                                        <circle cx="12" cy="19" r="1"></circle>
-                                        <circle cx="12" cy="5" r="1"></circle>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
-                                </a></div>
-                            </div>
-
-                            <div className="card-body p-0">
-                                <div className="col-12 p-3 markdown mh-100">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, eos explicabo
-                                        fuga fugiat incidunt labore nobis quibusdam sit tempora temporibus.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card w-100 center-block mb-3">
-                            <div className="card-header"><h3 className="card-title cursor-pointer">2-nd post</h3>
-                                <div className="card-actions btn-actions"><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
-                                        <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <polyline points="6 15 12 9 18 15"></polyline>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <circle cx="12" cy="12" r="1"></circle>
-                                        <circle cx="12" cy="19" r="1"></circle>
-                                        <circle cx="12" cy="5" r="1"></circle>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
-                                </a></div>
-                            </div>
-                            <div className="card-body p-0">
-                                <div className="col-12 p-3 markdown mh-100">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, dolor est maxime non quos vel?
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="card w-100 center-block mb-3">
-                            <div className="card-header"><h3 className="card-title cursor-pointer">3-rd post</h3>
-                                <div className="card-actions btn-actions"><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
-                                        <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <polyline points="6 15 12 9 18 15"></polyline>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <circle cx="12" cy="12" r="1"></circle>
-                                        <circle cx="12" cy="19" r="1"></circle>
-                                        <circle cx="12" cy="5" r="1"></circle>
-                                    </svg>
-                                </a><a href="#" className="btn-action">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="icon" width="24" height="24"
-                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                         stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
-                                </a></div>
-                            </div>
-                            <div className="card-body p-0">
-                                <div className="col-12 p-3 markdown mh-100">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci cupiditate
-                                        facere, laboriosam nulla quod rerum sit soluta tempore veniam voluptatem.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>}
-                    {isTopicsLoading && <TopicPlaceHolder/>}
+                    <UsersTopicsCard/>
                 </div>
             </div>
         </div>
     );
 }
+
+function formatDate(date) {
+    if(!date) return "";
+    let d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 export default ProfileDetails;

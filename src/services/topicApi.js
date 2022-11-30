@@ -13,11 +13,26 @@ export const topicAPI = createApi({
     endpoints: (build) => ({
         fetchAllTopics: build.query({
             query: ({accessToken, page, pageSize, sort}) => ({
-                url: '/topic/TypeOfSort',
+                url: '/topic',
                 params: {
                     page,
                     pageSize,
                     sort
+                },
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                }
+            }),
+            // transformResponse: (response, meta, arg) => response.data
+        }),
+        fetchAllTopicsByTag: build.query({
+            query: ({accessToken, page, pageSize, sort, tagName}) => ({
+                url: '/topic/ByTag',
+                params: {
+                    page,
+                    pageSize,
+                    sort,
+                    tagName
                 },
                 headers: {
                     "authorization": `Bearer ${accessToken}`
@@ -43,7 +58,20 @@ export const topicAPI = createApi({
                     attachmentsId,
                     tagsNames
                 }
-            })
+            }),
+        fetchUsersTopics: build.query({
+            query: ({accessToken, UserId, page, pageSize, sort}) => ({
+                url: '/topic/ByUserId',
+                params: {
+                    UserId,
+                    page,
+                    pageSize,
+                    sort
+                },
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                }
+            }),
         })
     })
 });

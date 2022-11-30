@@ -4,12 +4,16 @@ import {tagApi} from "../services/tagApi";
 import {authAPI} from "../services/authApi";
 import authReducer from "./reducers/AuthReducer"
 import {userAPI} from "../services/userApi";
+import {subscribeAPI} from "../services/subscribeApi";
+import {markAPI} from "../services/markApi";
 
 const rootReducer = combineReducers({
     [topicAPI.reducerPath]: topicAPI.reducer,
     [tagApi.reducerPath]:tagApi.reducer,
     [authAPI.reducerPath]: authAPI.reducer,
     [userAPI.reducerPath]: userAPI.reducer,
+    [subscribeAPI.reducerPath]: subscribeAPI.reducer,
+    [markAPI.reducerPath]: markAPI.reducer,
     auth: authReducer
 });
 
@@ -20,4 +24,6 @@ export const store = configureStore({
             .concat(tagApi.middleware)
             .concat(authAPI.middleware)
             .concat(userAPI.middleware)
+            .concat(subscribeAPI.middleware)
+            .concat(markAPI.middleware)
 });

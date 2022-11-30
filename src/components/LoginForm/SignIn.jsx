@@ -46,7 +46,7 @@ export const SignIn = ({onSubmit, errors, onResponse}) => {
                                     <div className="mb-2">
                                         <label className="form-label">
                                             Password
-                                            <span className="form-label-description link-primary cursor-pointer">I forgot password</span>
+                                            <Link to="/ForgetPassword" className="form-label-description link-primary cursor-pointer">I forgot password</Link>
                                         </label>
                                         <div className="input-group input-group-flat">
                                             <Field type={!showPassword? "password" : "text"} name="password" className="form-control" placeholder="Your password"

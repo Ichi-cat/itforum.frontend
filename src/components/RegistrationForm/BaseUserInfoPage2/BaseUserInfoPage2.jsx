@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {userAPI} from "../../../services/userApi";
-import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {FaUserSecret} from "react-icons/fa";
 import UploadWindow from "../../UploadWindow/UploadWindow";
@@ -12,7 +11,7 @@ const BaseUserInfoPage2 = ({errors, onSubmit}) => {
     const navigate = useNavigate();
     const [isModuleOpen, setIsModuleOpen] = useState(false);
     const token = useSelector((state) => state.auth.token);
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery(token);
+    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery({accessToken: token});
     return (
         <div>
             <div className="page page-center">
@@ -23,6 +22,7 @@ const BaseUserInfoPage2 = ({errors, onSubmit}) => {
                             <h1 className="cursor-pointer" onClick={() => navigate("/")}>ITForum</h1>
                         </a>
                     </div>
+                    {/*&& server not error*/}
                     {!isUserInfoFetching && <Formik initialValues={{
                         description: userInfo.description,
                         study: userInfo.study,

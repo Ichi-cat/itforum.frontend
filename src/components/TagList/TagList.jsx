@@ -2,13 +2,13 @@ import TagItem from "./TagItem/TagItem";
 import {useSelector} from "react-redux";
 import Paginator from "../common/Paginator/Paginator";
 import {tagApi} from "../../services/tagApi";
-import ProfileCard from "./ProfileCard/ProfileCard";
 import {useSearchParams} from "react-router-dom";
 import {useState} from "react";
 import Sorting from "../common/Sorting/Sorting";
+import ProfileCard from "../TopicList/ProfileCard/ProfileCard";
 
 const TagList = () => {
-    debugger
+    const isAuthorized = useSelector((state) => state.auth.isAuth);
     const [sortList, setSortList] = useState([
         {value: "0", title: "Ascending"},
         {value: "1", title: "Descending"},
@@ -35,16 +35,15 @@ const TagList = () => {
     //     {Name:"Qwertyg", Id:456}
     // ]
     // const isFetching=false;
-    debugger
     return (
         <div className="container-xl">
             <div className="row justify-content-md-center">
                 <div className="mt-3 col-lg-3 col-md-8 col-sm-12">
-                    <ProfileCard/>
+                    {isAuthorized&&<ProfileCard/>}
                 </div>
                 <div className="mt-3 col-lg-9 col-md-8 col-sm-12">
                     <div className="row">
-                        <div className="col-6"><Paginator/></div>
+                        <div className="col-6"><Paginator pagesCount={tags?tags.pageCount : 1}/></div>
                         <div className="col-6">
                             <Sorting sortingList={sortList} initialSort={sortList[0]} onSortInput={setSort}/>
                         </div>
