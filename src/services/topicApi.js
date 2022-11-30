@@ -45,6 +45,20 @@ export const topicAPI = createApi({
                 url: `/topic/${id}`
             })
         }),
+        setTopic: build.mutation({
+            query: ({accessToken, name, content, attachmentsId, tagsNames}) => ({
+                url: '/Topic',
+                method: "POST",
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
+                body:{
+                    name,
+                    content,
+                    attachmentsId,
+                    tagsNames
+                }
+            }),
         fetchUsersTopics: build.query({
             query: ({accessToken, UserId, page, pageSize, sort}) => ({
                 url: '/topic/ByUserId',
