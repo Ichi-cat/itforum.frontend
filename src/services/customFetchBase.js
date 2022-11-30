@@ -28,7 +28,6 @@ const customFetchBase = async (args, api, extraOptions) => {
     // wait until the mutex is available without locking it
     await mutex.waitForUnlock();
     let result = await baseQuery(args, api, extraOptions);
-    debugger
     if (result.error?.status==401) {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
@@ -41,11 +40,13 @@ const customFetchBase = async (args, api, extraOptions) => {
                     api,
                     extraOptions
                 );
-
                 if (refreshResult.data) {
                     api.dispatch(setToken(refreshResult.data.accessToken));
                     localStorage.setItem("refreshToken", refreshResult.data.refreshToken)
-                    args.headers.authorization = "Bearer "+refreshResult.data.accessToken;
+                    console.log(args.headers)
+                    console.log(args)
+                    console.log(api)
+                    args.headers = {authorization: "Bearer "+refreshResult.data.accessToken};
                     result = await baseQuery(args, api, extraOptions);
                 } else {
                     window.location.href = '/SignIn';
