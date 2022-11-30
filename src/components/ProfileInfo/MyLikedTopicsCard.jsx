@@ -7,8 +7,7 @@ import {useSelector} from "react-redux";
 
 
 const MyLikedTopicsCard = () => {
-    const accessToken = useSelector(state => state.auth.token);
-    const {data, isFetching: isLikedPostsLoading, isError} =  markAPI.useFetchLikedTopicsQuery( { accessToken, page: 1, pageSize: 6 } );
+    const {data, isFetching: isLikedPostsLoading, isError} =  markAPI.useFetchLikedTopicsQuery( { page: 1, pageSize: 6 } );
     return (
         <div>
             {/* if (!isLikedPostsLoading) { }*/}

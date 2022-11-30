@@ -14,27 +14,16 @@ const TagList = () => {
         {value: "1", title: "Descending"},
         {value: "2", title: "By Popularity"}
     ]);
-    const accessToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJtaWhhaWxAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6Im1paGFpbCIsImp0aSI6IjY1YWE0Zjg5LWRlYmUtNGE2NS1hZWMwLWFhNjdkNmE1MTYxMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE2NjkyOTg4ODgsImlzcyI6Ikl0Rm9ydW1TZXJ2ZXIiLCJhdWQiOiJJdEZvcnVtUmVhY3RDbGllbnQifQ.D_InYeC6lpJxZTrLGAYFMMCDkVwSmD9VA2dj5fBO92g`;
-    //useSelector(state => state.auth.token);
     const [sort, setSort] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
     let currentPage = +searchParams.get("page");
     if (!currentPage) currentPage = 1;
     const pageSize = 12;
     const {data: tags, isFetching, refetch} = tagApi.useFetchAllTagsQuery({
-        accessToken,
         page: currentPage,
         pageSize,
         sort
     });
-    console.log(tags);
-    // const tags=[
-    //     {Name:"Qwerty", Id:123},
-    //     {Name:"Qwertywqes", Id: 234},
-    //     {Name:"Qwertyd", Id: 345},
-    //     {Name:"Qwertyg", Id:456}
-    // ]
-    // const isFetching=false;
     return (
         <div className="container-xl">
             <div className="row justify-content-md-center">
