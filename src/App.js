@@ -2,6 +2,7 @@ import '@tabler/core/dist/css/tabler.min.css'
 import '@tabler/core/dist/js/tabler.min'
 import './App.css';
 import Header from "./components/Header/Header";
+import AddTopicButton from "./components/TopicAdding/AddTopicButton";
 import TopicList from "./components/TopicList/TopicList";
 import {Route, Routes} from "react-router-dom"
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
@@ -13,6 +14,8 @@ import SignInContainer from "./components/LoginForm/SignInContainer";
 import SignUpContainer from "./components/RegistrationForm/SignUpContainer";
 import BaseUserInfoContainer from "./components/RegistrationForm/BaseUserInfo/BaseUserInfoContainer";
 import BaseUserInfoPage2Container from "./components/RegistrationForm/BaseUserInfoPage2/BaseUserInfoPage2Container";
+import AddTopicPage from "./components/TopicAdding/AddTopicPage";
+import "./services/Renderer/renderer"
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -22,13 +25,14 @@ function App() {
   return (
     <div className={`App ` + (isDark ? "theme-dark":"theme-light")}>
       <Routes>
-          <Route path="/" element={<Header setDark={setDark}/>}>
+          <Route path="/" element={<><Header setDark={setDark}/><AddTopicButton/></>}>
               <Route index element={<TopicList/>}/>
               <Route path="list" element={<TopicList/>}/>
               <Route path="tags" element={<TagList/>}/>
               <Route path="users" element={<TopicList/>}/>
               <Route path="/profile" element={<ProfileInfo/>}/>
               <Route path="/profile/:profileId" element={<ProfileInfo/>}/>
+              <Route path="addTopic" element={<AddTopicPage/>}/>
           {/*    routings for pages with header*/}
           </Route>
           <Route path="/SignIn" element={<SignInContainer/>}/>

@@ -29,6 +29,21 @@ export const topicAPI = createApi({
             query: (id) => ({
                 url: `/topic/${id}`
             })
+        }),
+        setTopic: build.mutation({
+            query: ({accessToken, name, content, attachmentsId, tagsNames}) => ({
+                url: '/Topic',
+                method: "POST",
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
+                body:{
+                    name,
+                    content,
+                    attachmentsId,
+                    tagsNames
+                }
+            })
         })
     })
 });
