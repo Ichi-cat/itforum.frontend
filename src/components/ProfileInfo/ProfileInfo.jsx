@@ -15,11 +15,8 @@ import UsersTopicsCard from "./UsersTopicsCard";
 const ProfileDetails = (props) => {
     const [isModuleOpen, setIsModuleOpen] = useState(false);
     const isAuthorized = useSelector((state) => state.auth.isAuth);
-    const accessToken = useSelector((state) => state.auth.token);
     let profileId = useParams().profileId?.toString();
-    const { data: userInfo, isFetching: isUserInfoFetching, isError, error } = userAPI.useGetFullUserInformationQuery({accessToken, profileId}, {skip: !isAuthorized && !profileId});
-    const isLikedPostsLoading = false;
-    const isTopicsLoading = false;
+    const { data: userInfo, isFetching: isUserInfoFetching, isError, error } = userAPI.useGetFullUserInformationQuery({profileId}, {skip: !isAuthorized && !profileId});
     if(isError) console.log(error.data)
     return (
         <div className="container text-center">

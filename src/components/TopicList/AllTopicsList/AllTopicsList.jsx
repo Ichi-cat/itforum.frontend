@@ -18,9 +18,7 @@ const AllTopicsList = ({isSubscribedTopics, setIsSubscribedTopics}) => {
         {value: "2", title: "By Likes"}
     ]);
     const [sort, setSort] = useState(0);
-    const accessToken = useSelector(state => state.auth.token);
     const {data: topics, isFetching} = topicAPI.useFetchAllTopicsQuery({
-        accessToken,
         page: currentPage,
         pageSize,
         sort
