@@ -10,18 +10,17 @@ const UserItem = ({user, refetch}) => {
     const [isSubscribeDisabled, setIsSubscribeDisabled] = useState(false);
     const[subscribe, _data] = subscribeAPI.useSubscribeMutation();
     const[unsubscribe, _] = subscribeAPI.useUnsubscribeMutation();
-    const accessToken = useSelector(state => state.auth.token);
     const isAuthorized = useSelector((state) => state.auth.isAuth);
     const subscribeOnClick = () => {
         setIsSubscribeDisabled(true);
-        subscribe({accessToken, id: user.id}).then(data => {
+        subscribe({id: user.id}).then(data => {
             if(!data.error) setIsSubscribed(true);
             setIsSubscribeDisabled(false);
         }).then(()=>refetch());
     }
     const unsubscribeOnClick = () => {
         setIsSubscribeDisabled(true);
-        unsubscribe({accessToken, id: user.id}).then(data => {
+        unsubscribe({id: user.id}).then(data => {
             if(!data.error) setIsSubscribed(false);
             setIsSubscribeDisabled(false);
         }).then(()=>refetch());
