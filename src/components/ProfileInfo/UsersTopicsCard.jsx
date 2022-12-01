@@ -18,12 +18,13 @@ const UsersTopicsCard = () => {
         {value: "2", title: "By Likes"}
     ]);
     const [sort, setSort] = useState(0);
+    const accessToken = useSelector(state => state.auth.token);
     const [searchParams, setSearchParams] = useSearchParams();
     let currentPage = +searchParams.get("page");
     if(!currentPage) currentPage = 1;
     const pageSize = 5;
     let profileId = useParams().profileId?.toString();
-    const {data, isFetching: isTopicsPostsLoading, isError} =  topicAPI.useFetchUsersTopicsQuery( { profileId, page: currentPage, pageSize: pageSize, sort, UserId: profileId } );
+    const {data, isFetching: isTopicsPostsLoading, isError} =  topicAPI.useFetchUsersTopicsQuery( { accessToken,profileId, page: currentPage, pageSize: pageSize, sort, UserId: profileId } );
     return (
         <div>
             <Sorting sortingList={sortList} initialSort={sortList[0]} onSortInput={setSort} />

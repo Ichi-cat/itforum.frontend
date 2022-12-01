@@ -4,11 +4,11 @@ import {userAPI} from "../../services/userApi";
 import {logOut} from "../../store/reducers/AuthReducer";
 import React from "react";
 import {FaUserSecret} from 'react-icons/fa'
-import {baseQuery} from "../../services/customFetchBase";
 
 const Header = ({setDark}) => {
     const isAuthorized = useSelector((state) => state.auth.isAuth);
-    const { data: userInfo, isLoading, isFetching, isError } = userAPI.useGetUserInformationQuery({skip: !isAuthorized});
+    const token = useSelector((state) => state.auth.token);
+    const { data: userInfo, isLoading, isFetching, isError } = userAPI.useGetUserInformationQuery(token, {skip: !isAuthorized});
     const dispatch = useDispatch();
     const setDarkTheme = () => {
         localStorage.setItem("theme", "dark");

@@ -18,8 +18,9 @@ const UserList = () => {
         {value: "1", title: "By Name Descending"}
     ]);
     const placeHolders = [];
+    const accessToken = useSelector(state => state.auth.token);
     const [sort, setSort] = useState(0);
-    const {data, isFetching, isLoading, refetch} = userAPI.useGetUserListQuery({page, pageSize, sort});
+    const {data, isFetching, isLoading, refetch} = userAPI.useGetUserListQuery({accessToken, page, pageSize, sort});
     for(let i=1; i<=10; i++){
         placeHolders.push(i);
     }

@@ -1,13 +1,23 @@
+import {serverUrl} from "../config";
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import customFetchBase from "./customFetchBase";
+
+const token = "test";
 
 export const userAPI = createApi({
     reducerPath: 'userAPI',
-    baseQuery: customFetchBase,
+    baseQuery: fetchBaseQuery({
+        baseUrl: serverUrl, prepareHeaders: (headers) => {
+
+            return headers;
+        }
+    }),
     endpoints: (build) => ({
         getUserList: build.query({
-            query: ({page, pageSize, sort}) => ({
+            query: ({accessToken, page, pageSize, sort}) => ({
                 url: '/User',
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
                 params: {
                     page,
                     pageSize,
@@ -17,29 +27,42 @@ export const userAPI = createApi({
             providesTags: result => ['User']
         }),
         getUserInformation: build.query({
-            query: () => ({
+            query: (accessToken) => ({
                 url: '/User/info',
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
             }),
             providesTags: result => ['User']
         }),
         getFullUserInformation: build.query({
-            query: ({profileId}) => ({
+            query: ({accessToken, profileId}) => ({
                 url: `/User/FullInfo/${(profileId?profileId:'')}`,
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
             }),
             providesTags: result => ['User']
         }),
         updateUserInfo: build.mutation({
-            query: ({userInfo}) => ({
+            query: ({accessToken, userInfo}) => ({
                 url: '/User',
                 method: "PUT",
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
                 body: userInfo
             }),
             invalidatesTags: ['User']
         }),
         setUserAvatar: build.mutation({
-            query: ({formData}) => ({
+            query: ({accessToken, formData}) => ({
                 url: '/User/Upload',
                 method: "POST",
+                headers: {
+
+                    "authorization": `Bearer ${accessToken}`
+                },
                 body: formData
             }),
             invalidatesTags: ['User']
