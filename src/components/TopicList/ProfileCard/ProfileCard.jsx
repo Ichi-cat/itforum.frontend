@@ -6,7 +6,8 @@ import {userAPI} from "../../../services/userApi";
 
 const ProfileCard = () => {
     const isAuthorized = useSelector((state) => state.auth.isAuth);
-    const { data: userInfo, isLoading, isFetching, isError } = userAPI.useGetUserInformationQuery({skip: !isAuthorized});
+    const token = useSelector((state) => state.auth.token);
+    const { data: userInfo, isLoading, isFetching, isError } = userAPI.useGetUserInformationQuery(token, {skip: !isAuthorized});
     return (
         <div className="card mx-auto" style={{margin: "0 auto"}}>
             <div className="card-body text-center">

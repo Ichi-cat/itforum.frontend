@@ -2,7 +2,7 @@ import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import {topicAPI} from "../services/topicApi";
 import {tagApi} from "../services/tagApi";
 import {authAPI} from "../services/authApi";
-import authReducer, {logOut} from "./reducers/AuthReducer"
+import authReducer from "./reducers/AuthReducer"
 import {userAPI} from "../services/userApi";
 import {subscribeAPI} from "../services/subscribeApi";
 import {markAPI} from "../services/markApi";
@@ -17,16 +17,8 @@ const rootReducer = combineReducers({
     auth: authReducer
 });
 
-const rootReducerContainer = (state, action) => {
-    if (logOut.match(action)) {
-        state = undefined;
-    }
-
-    return rootReducer(state, action);
-};
-
 export const store = configureStore({
-    reducer: rootReducerContainer,
+    reducer: rootReducer,
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware().concat(topicAPI.middleware)
             .concat(tagApi.middleware)

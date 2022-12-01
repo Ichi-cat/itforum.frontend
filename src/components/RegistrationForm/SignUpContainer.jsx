@@ -20,8 +20,8 @@ const SignUpContainer = () => {
     const [errors, setErrors] = useState([]);
     const onSuccess = (data) => {
         //data.token
-        localStorage.setItem("refreshToken", data.refreshToken)
-        dispatch(setToken(data.accessToken));
+        console.log(data.token);
+        dispatch(setToken(data.token));
     }
     const onFailed = (error) => {
         //error.data.Errors
