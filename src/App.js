@@ -16,6 +16,7 @@ import TopicListByTag from "./components/TopicListByTag/TopicListByTag";
 import BaseUserInfoContainer from "./components/RegistrationForm/BaseUserInfo/BaseUserInfoContainer";
 import BaseUserInfoPage2Container from "./components/RegistrationForm/BaseUserInfoPage2/BaseUserInfoPage2Container";
 import AddTopicPage from "./components/TopicAdding/AddTopicPage";
+import TopicPage from "./components/TopicPage/TopicPage";
 import "./services/Renderer/renderer"
 import UserList from "./components/UserList/UserList";
 import ForgetPasswordContainer from "./components/ForgetPassword/ForgetPasswordContainer";
@@ -38,6 +39,7 @@ function App() {
               <Route path="/profile" element={<ProfileInfo/>}/>
               <Route path="/profile/:profileId" element={<ProfileInfo/>}/>
               <Route path="addTopic" element={<AddTopicPage/>}/>
+              <Route path="topics/:topicId" element={<TopicPage/>}/>
           {/*    routings for pages with header*/}
           </Route>
           <Route path="/SignIn" element={<SignInContainer/>}/>
