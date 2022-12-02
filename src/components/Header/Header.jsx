@@ -100,7 +100,7 @@ const Header = ({setDark}) => {
                                 <Link to="/profile" className="dropdown-item">Profile</Link>
                                 <a href="#" className="dropdown-item">Feedback</a>
                                 <div className="dropdown-divider"></div>
-                                <a href="#" className="dropdown-item">Settings</a>
+                                <Link to="/profile/settings" className="dropdown-item">Settings</Link>
                                 <button className="dropdown-item" onClick={logOutOnClick}>Logout</button>
                             </div>
                         </>}

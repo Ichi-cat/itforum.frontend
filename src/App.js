@@ -17,6 +17,7 @@ import BaseUserInfoPage2Container from "./components/RegistrationForm/BaseUserIn
 import UserList from "./components/UserList/UserList";
 import ForgetPasswordContainer from "./components/ForgetPassword/ForgetPasswordContainer";
 import ResetPasswordContainer from "./components/ResetPassword/ResetPasswordContainer";
+import SettingsForm from "./components/SettingsForm/SettingsForm";
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -33,6 +34,7 @@ function App() {
               <Route path="tags" element={<TagList/>}/>
               <Route path="users" element={<UserList/>}/>
               <Route path="/profile" element={<ProfileInfo/>}/>
+              <Route path="/profile/settings" element={<SettingsForm/>}/>
               <Route path="/profile/:profileId" element={<ProfileInfo/>}/>
           {/*    routings for pages with header*/}
           </Route>
@@ -42,6 +44,7 @@ function App() {
           <Route path="/ForgetPassword" element={<ForgetPasswordContainer/>}/>
           <Route path="/info/1" element={<BaseUserInfoContainer/>}/>
           <Route path="/info/2" element={<BaseUserInfoPage2Container/>}/>
+
           {/*    routings for pages without header*/}
           {/*https://reactrouter.com/en/main/start/overview*/}
       </Routes>
