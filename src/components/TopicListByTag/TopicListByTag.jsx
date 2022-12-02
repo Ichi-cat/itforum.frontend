@@ -19,8 +19,7 @@ const TopicListByTag = () => {
     let currentPage = +searchParams.get("page");
     if(!currentPage) currentPage = 1;
     const pageSize = 5;
-    const accessToken = useSelector(state => state.auth.token);
-    const {data: topics, isFetching, refetch} = topicAPI.useFetchAllTopicsByTagQuery({accessToken, page: currentPage, pageSize, sort, tagName});
+    const {data: topics, isFetching, refetch} = topicAPI.useFetchAllTopicsByTagQuery({page: currentPage, pageSize, sort, tagName});
     return (
         <div className="container-xl">
             <div className="row mt-5 justify-content-md-center">
