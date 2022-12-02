@@ -45,7 +45,7 @@ export const topicAPI = createApi({
                     attachmentsId,
                     tagsNames
                 }
-            })
+            }),
         }),
         fetchUsersTopics: build.query({
             query: ({UserId, page, pageSize, sort}) => ({
