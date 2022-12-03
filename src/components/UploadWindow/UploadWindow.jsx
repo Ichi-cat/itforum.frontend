@@ -9,7 +9,6 @@ const UploadWindow = ({closeModule, onSuccess}) => {
     const [crop, setCrop] = useState({x: 0, y: 0})
     const [zoom, setZoom] = useState(1)
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
-    const accessToken = useSelector(state => state.auth.token);
     const [errors, setErrors] = useState([]);
     const onFailed = (error) => {
         //error.data.Errors
@@ -30,7 +29,7 @@ const UploadWindow = ({closeModule, onSuccess}) => {
             let formData = new FormData();
             console.log(croppedImage)
             formData.append("file", croppedImage);
-            setAvatar({accessToken, formData}).then(data => {
+            setAvatar({formData}).then(data => {
                 if(data.data){
                     onSuccess();
                     closeModule()

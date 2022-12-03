@@ -2,6 +2,7 @@ import '@tabler/core/dist/css/tabler.min.css'
 import '@tabler/core/dist/js/tabler.min'
 import './App.css';
 import Header from "./components/Header/Header";
+import AddTopicButton from "./components/TopicAdding/AddTopicButton";
 import TopicList from "./components/TopicList/TopicList";
 import {Route, Routes} from "react-router-dom"
 import ProfileInfo from "./components/ProfileInfo/ProfileInfo";
@@ -14,6 +15,9 @@ import SignUpContainer from "./components/RegistrationForm/SignUpContainer";
 import TopicListByTag from "./components/TopicListByTag/TopicListByTag";
 import BaseUserInfoContainer from "./components/RegistrationForm/BaseUserInfo/BaseUserInfoContainer";
 import BaseUserInfoPage2Container from "./components/RegistrationForm/BaseUserInfoPage2/BaseUserInfoPage2Container";
+import AddTopicPage from "./components/TopicAdding/AddTopicPage";
+import TopicPage from "./components/TopicPage/TopicPage";
+import "./services/Renderer/renderer"
 import UserList from "./components/UserList/UserList";
 import ForgetPasswordContainer from "./components/ForgetPassword/ForgetPasswordContainer";
 import ResetPasswordContainer from "./components/ResetPassword/ResetPasswordContainer";
@@ -27,7 +31,7 @@ function App() {
   return (
     <div className={`App ` + (isDark ? "theme-dark":"theme-light")}>
       <Routes>
-          <Route path="/" element={<Header setDark={setDark}/>}>
+          <Route path="/" element={<><Header setDark={setDark}/><AddTopicButton/></>}>
               <Route index element={<TopicList/>}/>
               <Route path="list" element={<TopicList/>}/>
               <Route path="/byTag/:tag" element={<TopicListByTag/>}/>
@@ -36,6 +40,8 @@ function App() {
               <Route path="/profile" element={<ProfileInfo/>}/>
               <Route path="/profile/settings" element={<SettingsForm/>}/>
               <Route path="/profile/:profileId" element={<ProfileInfo/>}/>
+              <Route path="addTopic" element={<AddTopicPage/>}/>
+              <Route path="topics/:topicId" element={<TopicPage/>}/>
           {/*    routings for pages with header*/}
           </Route>
           <Route path="/SignIn" element={<SignInContainer/>}/>
