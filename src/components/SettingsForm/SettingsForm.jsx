@@ -3,6 +3,7 @@ import AccountSettings from "./AccountSettings/AccountSettings";
 import AccountSettingsContainer from "./AccountSettings/AccountSettingsContainer";
 import {Link} from "react-router-dom";
 import SecuritySettings from "./SecuritySettings/SecuritySettings";
+import SecuritySettingsContainer from "./SecuritySettings/SecuritySettingsContainer";
 
 
 const SettingsForm = () => {
@@ -43,7 +44,7 @@ const SettingsForm = () => {
                                 </div>
                                 <div className="col d-flex flex-column">
                                     {page==1 &&<AccountSettingsContainer/>}
-                                    {page==2 &&<SecuritySettings/>}
+                                    {page==2 &&<SecuritySettingsContainer/>}
                                 </div>
                             </div>
                         </div>
