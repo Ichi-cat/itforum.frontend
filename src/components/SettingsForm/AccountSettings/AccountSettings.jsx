@@ -1,26 +1,32 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useSelector} from "react-redux";
 import {userAPI} from "../../../services/userApi";
+import {FaUserSecret} from "react-icons/fa";
+import UploadWindow from "../../UploadWindow/UploadWindow";
+import {authAPI} from "../../../services/authApi";
+import DescriptionPlaceHolder from "../../placeholders/DescriptionPlaceHolder/DescriptionPlaceHolder";
+import ProfilePlaceHolder from "../../placeholders/ProfilePlaceHolder/ProfilePlaceHolder";
 
-const AccountSettings = ({errors, onSubmit}) => {
+const AccountSettings = ({errors, onSubmit, EmailOnSubmit, userInfoStatus}) => {
     const token = useSelector((state) => state.auth.token);
     const { data: userInfo, isFetching: isUserInfoFetching} = userAPI.useGetFullUserInformationQuery({accessToken: token});
+    const [isModuleOpen, setIsModuleOpen] = useState(false);
     return (
         <div>
             <div className="card-body">
+                {isUserInfoFetching &&<div className="progress mb-2">
+                    <div className="progress-bar progress-bar-indeterminate bg-green"></div>
+                </div>}
+                {isModuleOpen && <UploadWindow closeModule={() => setIsModuleOpen(false)} onSuccess={()=>{}}/>}
                 <h2 className="mb-4">My Account</h2>
                 <h3 className="card-title">Profile Details</h3>
                 <div className="row align-items-center">
-                    <div className="col-auto"><span className="avatar avatar-xl"
-                                                    style={{"backgroundImage":"url(./static/avatars/000m.jpg)"}}></span>
-                    </div>
-                    <div className="col-auto"><a href="#" className="btn">
-                        Change avatar
-                    </a></div>
-                    <div className="col-auto"><a href="#" className="btn btn-ghost-danger">
-                        Delete avatar
-                    </a></div>
+                    {!isUserInfoFetching && <div className="cursor-pointer" onClick={() => setIsModuleOpen(true)}>
+                        {userInfo.avatar && <span className="avatar avatar-xl avatar-rounded"
+                                                  style={{backgroundImage: `url(${userInfo.avatar})`}}/>}
+                        {!userInfo.avatar && <FaUserSecret className="avatar avatar-xl"/>}
+                    </div>}
                 </div>
                 {!isUserInfoFetching && <Formik initialValues={{
                     firstName: userInfo?userInfo.firstName:"",
@@ -29,8 +35,7 @@ const AccountSettings = ({errors, onSubmit}) => {
                     location: userInfo?userInfo.location:"",
                     description: userInfo.description,
                     study: userInfo.study,
-                    work: userInfo.work,
-                    email: userInfo.email
+                    work: userInfo.work
                 }} onSubmit={onSubmit}>
                     {({isSubmitting}) => (<Form>
                             <h3 className="card-title mt-4">Basic Info</h3>
@@ -70,17 +75,6 @@ const AccountSettings = ({errors, onSubmit}) => {
                                     <ErrorMessage name="work" component="div" className="text-danger"/>
                                 </div>
                             </div>
-                            <h3 className="card-title mt-4">Email</h3>
-                            <p className="card-subtitle">This contact will be shown to others publicly, so
-                                choose it carefully.</p>
-                            <div>
-                                <div className="row g-2">
-                                    <div className="col-auto">
-                                        <Field type="email" name="email" className="form-control" style={{"width":"400px"}}
-                                               placeholder="Enter your email"/>
-                                    </div>
-                                </div>
-                            </div>
                             <h3 className="card-title mt-4">Description</h3>
                             <p className="card-subtitle">Short description to your profile</p>
                             <div>
@@ -96,6 +90,29 @@ const AccountSettings = ({errors, onSubmit}) => {
                             </div>
                         </div>
                         </Form>)}
+                </Formik>}
+                {isUserInfoFetching && <ProfilePlaceHolder/>}
+                {!isUserInfoFetching && <Formik initialValues={{
+                    email: userInfo.email
+                }} onSubmit={EmailOnSubmit}>
+                    {({isSubmitting}) => (<Form>
+                        <h3 className="card-title mt-4">Email</h3>
+                        <p className="card-subtitle">This contact will be shown to others publicly, so
+                            choose it carefully.</p>
+                        <div>
+                            <div className="row g-2">
+                                <div className="col-auto">
+                                    <Field type="email" name="email" className="form-control mb-2" style={{"width":"400px"}}
+                                           placeholder="Enter your email"/>
+                                </div>
+                            </div>
+                            <div className="card-footer bg-transparent mt-auto">
+                                <div className="btn-list justify-content-end">
+                                    <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </Form>)}
                 </Formik>}
             </div>
         </div>

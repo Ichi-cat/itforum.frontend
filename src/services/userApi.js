@@ -43,6 +43,17 @@ export const userAPI = createApi({
                 body: formData
             }),
             invalidatesTags: ['User']
+        }),
+        changeEmail: build.mutation({
+            query: ({accessToken, email}) => ({
+                url: '/Auth/ChangeEmail',
+                method: 'PUT',
+                headers: {
+                    "authorization": `Bearer ${accessToken}`
+                },
+                body: {email}
+            }),
+            invalidatesTags: ['User']
         })
     })
 });
