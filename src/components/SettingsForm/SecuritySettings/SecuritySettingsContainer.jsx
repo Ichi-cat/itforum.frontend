@@ -33,7 +33,7 @@ const SecuritySettingsContainer = () => {
     }
     const accessToken = useSelector(state => state.auth.token);
     const onSubmit = (values, {setSubmitting}) => {
-        changePassword({accessToken, oldPassword: values.password, newPassword: values.newPassword})
+        changePassword({accessToken, oldPassword: values.oldPassword, newPassword: values.newPassword})
             .then(data => onResponse(data))
             .then(_ => {setSubmitting(false)})
     }
