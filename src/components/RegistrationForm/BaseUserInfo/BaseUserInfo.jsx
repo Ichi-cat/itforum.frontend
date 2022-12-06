@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 
 const BaseUserInfo = ({errors, onSubmit}) => {
     const navigate = useNavigate();
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery();
+    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery({profileId:null});
     const validateForm = Yup.object().shape({
         firstName: Yup.string().required('Required').max(32),
         lastName: Yup.string().max(32),
