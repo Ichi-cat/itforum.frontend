@@ -1,32 +1,37 @@
 import React from "react";
-import {useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {stateFromMarkdown} from 'draft-js-import-markdown';
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { stateFromMarkdown } from 'draft-js-import-markdown';
 import { topicAPI } from "../../services/topicApi";
-import {EditorState, Editor as DraftEditor} from "draft-js";
+import { userAPI } from "../../services/userApi";
+import { EditorState, Editor as DraftEditor, ContentState } from "draft-js";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const TopicPage = (props) => {
     const isAuthorized = useSelector((state) => state.auth.isAuth);
     const accessToken = useSelector((state) => state.auth.token);
     let topicId = useParams().topicId?.toString();
-    console.log(topicId);
-    const { data: topicInfo, isFetching: isUserInfoFetching, isError, error } = topicAPI.useFetchTopicDetailsQuery(topicId, {skip: !topicId});
-    let contentState = (!isUserInfoFetching&&!isError)?stateFromMarkdown(topicInfo.content):EditorState.createEmpty();
-
+    const { data: topicInfo, isFetching: isTopicInfoFetching, isError, error } = topicAPI.useFetchTopicDetailsQuery(topicId, { skip: !topicId });
+    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isUserError, refetch } = userAPI.useGetFullUserInformationQuery({ profileId: topicInfo?.userId }, { skip: (!isTopicInfoFetching && !isError) });
+    (!isUserInfoFetching && !isUserError) && console.log(userInfo);
+    let contentState = (!isTopicInfoFetching && !isError) ? EditorState.createWithContent(stateFromMarkdown(topicInfo.content)) : EditorState.createEmpty();
+    console.log(topicInfo);
+    //const [isLiked, setIsLiked] = useState(topicInfo.isSubscribed);
     return (
         <div className="container">
-            <div className="col-md-12">
+            <div className="col-md-10">
                 <div className="row justify-content-md-center">
                     <div className="card mt-3">
                         <div className="card-header">
                             <div>
                                 <div className="row align-items-center">
                                     <div className="col-auto">
-                                        <span className="avatar" style={{ "backgroundImage": "url(./static/avatars/003m.jpg)" }}></span>
+                                        <span className="avatar" style={{ "backgroundImage": `url(${(!isUserInfoFetching && !isUserError) && userInfo.avatar})` }}></span>
                                     </div>
                                     <div className="col">
-                                        <div className="card-title">Dunn Slane</div>
-                                        <div className="card-subtitle">Research Nurse</div>
+                                        <div className="card-title">{(!isUserInfoFetching && !isUserError) && userInfo.userName}</div>
+                                        {/* <div className="card-subtitle">Research Nurse</div> */}
                                     </div>
                                 </div>
                             </div>
@@ -44,14 +49,22 @@ const TopicPage = (props) => {
                             </div>
                         </div>
                         <div className="card-body p-0">
-                            <div className="divide-y">
-                                <div>
-                                <DraftEditor readOnly={true} editorState={contentState}/>
-                                </div>
+                            <div><h1>{(!isTopicInfoFetching && !isError) && topicInfo.name}</h1></div>
+                            <div>
+                                <DraftEditor readOnly={true} editorState={contentState} />
                             </div>
+                        </div>
+                        <div className="card-footer">
+
+                            {(!isTopicInfoFetching && !isError) && <div>
+                                {/* Place for marks*/}
+                            </div>}
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="col-md-2">
+                {/* Place for tags*/}
             </div>
         </div>
     );

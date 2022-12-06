@@ -5,7 +5,7 @@ const TopicItem = ({topic}) => {
     const details = "Some temp content";
     const navigate = useNavigate();
     return (
-            <div onClick={() => navigate(`topics/${topic.id}`)} className="card w-100 center-block mb-3">
+            <div onClick={() => navigate(`/topics/${topic.id}`)} className="card w-100 center-block mb-3">
                 <div className="card-header">
                     <h3 className="card-title cursor-pointer">{topic.name}</h3>
                     <div className="card-actions btn-actions">

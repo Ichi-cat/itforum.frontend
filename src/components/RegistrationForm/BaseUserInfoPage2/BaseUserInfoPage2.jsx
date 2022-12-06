@@ -10,7 +10,7 @@ import UploadWindow from "../../UploadWindow/UploadWindow";
 const BaseUserInfoPage2 = ({errors, onSubmit}) => {
     const navigate = useNavigate();
     const [isModuleOpen, setIsModuleOpen] = useState(false);
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery();
+    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery({profileId:null});
     return (
         <div>
             <div className="page page-center">
