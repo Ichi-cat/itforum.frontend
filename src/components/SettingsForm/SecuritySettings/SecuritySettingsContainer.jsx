@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {compose} from "@reduxjs/toolkit";
 import SecuritySettings from "./SecuritySettings";
-import {authAPI} from "../../../services/authApi";
 import {setToken} from "../../../store/reducers/AuthReducer";
+import {userAPI} from "../../../services/userApi";
 
 
 const mapStateToProps = (state) => {
@@ -14,7 +14,7 @@ const mapDispatchToProps = {};
 
 
 const SecuritySettingsContainer = () => {
-    const [changePassword, status] = authAPI.useChangePasswordMutation();
+    const [changePassword, status] = userAPI.useChangePasswordMutation();
     const dispatch = useDispatch();
     const [errors, setErrors] = useState([]);
     const onSuccess = (data) => {

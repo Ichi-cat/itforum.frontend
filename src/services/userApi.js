@@ -54,6 +54,13 @@ export const userAPI = createApi({
                 body: {email}
             }),
             invalidatesTags: ['User']
-        })
+        }),
+        changePassword: build.mutation({
+            query: ({oldPassword, newPassword}) => ({
+                url: '/Auth/ChangePassword',
+                method: 'PUT',
+                body: {oldPassword, newPassword}
+            }),
+        }),
     })
 });
