@@ -20,6 +20,7 @@ import "./services/Renderer/renderer"
 import UserList from "./components/UserList/UserList";
 import ForgetPasswordContainer from "./components/ForgetPassword/ForgetPasswordContainer";
 import ResetPasswordContainer from "./components/ResetPassword/ResetPasswordContainer";
+import Chat from "./components/Chat/Chat";
 
 function App() {
     const [isDark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -46,6 +47,7 @@ function App() {
           <Route path="/ForgetPassword" element={<ForgetPasswordContainer/>}/>
           <Route path="/info/1" element={<BaseUserInfoContainer/>}/>
           <Route path="/info/2" element={<BaseUserInfoPage2Container/>}/>
+          <Route path="/chat/:chatId" element={<Chat/>}/>
           {/*    routings for pages without header*/}
           {/*https://reactrouter.com/en/main/start/overview*/}
       </Routes>

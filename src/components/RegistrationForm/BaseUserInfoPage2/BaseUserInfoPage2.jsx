@@ -10,7 +10,7 @@ import UploadWindow from "../../UploadWindow/UploadWindow";
 const BaseUserInfoPage2 = ({errors, onSubmit}) => {
     const navigate = useNavigate();
     const [isModuleOpen, setIsModuleOpen] = useState(false);
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery();
+    const { data: userInfo, isFetching: isUserInfoFetching, isError, refetch } = userAPI.useGetFullUserInformationQuery({profileId: null});
     return (
         <div>
             <div className="page page-center">
@@ -22,7 +22,7 @@ const BaseUserInfoPage2 = ({errors, onSubmit}) => {
                         </a>
                     </div>
                     {/*&& server not error*/}
-                    {!isUserInfoFetching && <Formik initialValues={{
+                    {!isUserInfoFetching && !isError&& <Formik initialValues={{
                         description: userInfo.description,
                         study: userInfo.study,
                         work: userInfo.work,
