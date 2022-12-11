@@ -30,7 +30,8 @@ export const topicAPI = createApi({
         fetchTopicDetails: build.query({
             query: (id) => ({
                 url: `/topic/${id}`
-            })
+            }),
+            providesTags: result=>[`Topic`]
         }),
         setTopic: build.mutation({
             query: ({accessToken, name, content, attachmentsId, tagsNames}) => ({
@@ -57,6 +58,17 @@ export const topicAPI = createApi({
                     sort
                 },
             }),
+        }),
+        setMark:build.mutation({
+            query: ({topicId, mark}) => ({
+                url: '/Mark',
+                method: "PUT",
+                body: {
+                    "topicId":topicId,
+                    "isLiked":mark
+                },
+            }),
+            invalidatesTags:[`Topic`]
         })
     })
 });

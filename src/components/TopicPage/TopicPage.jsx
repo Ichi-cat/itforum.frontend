@@ -7,17 +7,17 @@ import { userAPI } from "../../services/userApi";
 import { EditorState, Editor as DraftEditor, ContentState } from "draft-js";
 import { useState } from "react";
 import { useEffect } from "react";
+import MarkButtons from "./markButtons";
 
 const TopicPage = (props) => {
     const isAuthorized = useSelector((state) => state.auth.isAuth);
     const accessToken = useSelector((state) => state.auth.token);
     let topicId = useParams().topicId?.toString();
-    const { data: topicInfo, isFetching: isTopicInfoFetching, isError, error } = topicAPI.useFetchTopicDetailsQuery(topicId, { skip: !topicId });
-    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isUserError, refetch } = userAPI.useGetFullUserInformationQuery({ profileId: topicInfo?.userId }, { skip: (!isTopicInfoFetching && !isError) });
-    (!isUserInfoFetching && !isUserError) && console.log(userInfo);
+    const { data: topicInfo, isFetching: isTopicInfoFetching, isError, error, refetch } = topicAPI.useFetchTopicDetailsQuery(topicId, { skip: !topicId });
+    const { data: userInfo, isFetching: isUserInfoFetching, isFetching, isUserError } = userAPI.useGetFullUserInformationQuery({ profileId: topicInfo?.userId }, { skip: (!isTopicInfoFetching && !isError) });
+   // (!isUserInfoFetching && !isUserError) && console.log(userInfo);
     let contentState = (!isTopicInfoFetching && !isError) ? EditorState.createWithContent(stateFromMarkdown(topicInfo.content)) : EditorState.createEmpty();
-    console.log(topicInfo);
-    //const [isLiked, setIsLiked] = useState(topicInfo.isSubscribed);
+
     return (
         <div className="container">
             <div className="col-md-10">
@@ -57,7 +57,7 @@ const TopicPage = (props) => {
                         <div className="card-footer">
 
                             {(!isTopicInfoFetching && !isError) && <div>
-                                {/* Place for marks*/}
+                                {<MarkButtons topicId={topicId} Marks={{likeCount:topicInfo.likeCount, isLiked: topicInfo.isLiked, isDisliked: topicInfo.isDisliked, dislikeCount:topicInfo.dislikeCount}}/>}
                             </div>}
                         </div>
                     </div>
